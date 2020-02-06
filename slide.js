@@ -1,5 +1,5 @@
 /**
-* A widget to display a slideshow, controlled by items/items
+* A widget to display a slideshow2
 *
 * @param {id=} unique id for this widget (optional)
 * @param {text} a directory where the pictures are located
@@ -21,15 +21,20 @@
 {% macro slideshow2(id, item, delay, item_next, item_prev, item_stop, item_start, reverse, controls) %}
 	{% set uid = uid(page, id) %}
 
-	<div{% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} class="slideshow cycle-slideshow" data-widget="multimedia.slideshow2"
-		data-cycle-log="false" data-cycle-speed="2000" data-cycle-timeout="{{ delay|default(4) * 1000 }}" data-cycle-reverse="{{ reverse|default(0) }}" data-items="{{ item }}"
+	<div{% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} class="cycle-slideshow" data-widget="multimedia.slideshow2"
+		data-cycle-log="true" data-cycle-speed="2000" data-cycle-timeout="{{ delay|default(4) * 1000 }}" data-cycle-reverse="{{ reverse|default(0) }}" data-item="{{ item }}"
 		data-control_item="{{ item_prev }}, {{ item_next }}, {{ item_stop }}, {{ item_start }}">
-		{% for file in item %}
-			<img src="{{ file.path }}" style="display: block;" title="{{ file}}" alt="{{ file }}" />
+
+		{% for file in ['http://192.168.178.91/smartVISU2.9/doorbirdimg/1580661904.334102.jpg', 'http://192.168.178.91/smartVISU2.9/doorbirdimg/1580485978.719445.jpg'] %}
+			<img src="{{ file }}" style="display: block;" title="{{ file }}" alt="{{ file }}" />
 		{% endfor %}
+		
+		
 	</div>
   {% if controls %}
+	<span id="oldest">. </span>
 	<div data-role="controlgroup" data-type="horizontal">
+		
 		<a data-cycle-cmd="prev" href="#" class="ui-btn ui-micro ui-corner-all ui-btn-inline ui-nodisc-icon">
 			<img class="icon" src="icons/ws/audio_rew.svg" alt="prev">
 		</a>
@@ -42,17 +47,16 @@
 		<a data-cycle-cmd="next" href="#" class="ui-btn ui-micro ui-corner-all ui-btn-inline ui-nodisc-icon">
 			<img class="icon" src="icons/ws/audio_ff.svg" alt="next">
 		</a>
+		
 	</div>
+	<span id="newest">. </span>
 	{% endif %}
 {% endmacro %}
 
-
-/*
-*/
 // ----- multimedia.slideshow ----------------------------------------------------
 $.widget("sv.multimedia_slideshow2", $.sv.widget, {
 
-	initSelector: '[data-widget="multimedia.slideshow"2]',
+	initSelector: '[data-widget="multimedia.slideshow2"]',
 
 	options: {
 	},
@@ -63,14 +67,15 @@ $.widget("sv.multimedia_slideshow2", $.sv.widget, {
 	},
 
 	_update: function(response) {
-		
-        var lastet = items[0]
-        var newest = items[length(items)-1] 
+		console.log(item);
+        var latetest = item[0];
+        var newest = item[length(item)-1];
         var file_name_array = file_name_string.split(".");
         var file_name = file_name_array[file_name_array.length - 2];
         
-        
-        var control_items = String(this.options.item).explode();
+		$("#oldest").text('test');
+		$("#newest").text('test');
+        var control_items = String(this.options.control_item).explode();
 		for(var i = 0; i <= 4; i++) {
 			if(control_items[i] == '' || (i % 2 == 1 && control_items[i] == control_items[i-1])) // continue if item is not used
 				continue;
@@ -100,3 +105,4 @@ $(document).on('pagecontainerchange', function (event, ui) {
 	if(ui.toPage != null)
 		ui.toPage.find('[data-widget="multimedia.slideshow2"]').cycle('resume');
 });
+
