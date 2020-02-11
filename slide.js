@@ -106,67 +106,51 @@ $(document).on('pagecontainerchange', function (event, ui) {
 		ui.toPage.find('[data-widget="multimedia.slideshow2"]').cycle('resume');
 });
 
-// ----- multimedia.slideshow3 ----------------------------------------------------
-$.widget("sv.multimedia_slideshow3", $.sv.widget, {
 
-	initSelector: '[data-widget="multimedia.slideshow3"]',
-
-	options: {
-	},
-	
-	_create: function() {
-		this._super();
-		this.element.cycle();
-	},
-
-	_update: function(response) {
 		console.log('test_update');
 		var slideIndex = 1;
-		var items = String(this.options.item).explode();
-		console.log(response[0]);
-		//var oldest = response[0].split('/').pop();
-		//var newest = response[-1]url.split('/').pop();
-		
+
 		//displays slideshop
-		var image_array = ['http://192.168.178.91/smartVISU2.9/doorbirdimg/1581351557.317934.jpg', 'http://192.168.178.91/smartVISU2.9/doorbirdimg/1581351381.52909.jpg'];
-		var image_array_length = image_array.length;
+		var image_array = ['https://www.w3schools.com/howto/img_woods.jpg', 'https://www.w3schools.com/howto/img_5terre.jpg', 'https://www.w3schools.com/howto/img_mountains.jpg'];
+		var image_array_length = image_array.length-1;
 		var times = [];
 	
 		
 		if (Array.isArray(image_array )){
-			for(var i = 0; i <= image_array_length-1; i++) {
-				//save a date for each image
-				var timestamp = image_array[i].substring(image_array[i].lastIndexOf("/") + 1, image_array[i].lastIndexOf("."));
-				var datetime = new Date(timestamp * 1000);
-				times[i] = (datetime.getUTCDay()+1)+ '.'+ (datetime.getUTCMonth()+1)+'.'+datetime.getUTCFullYear() + '  '+datetime.getUTCHours()+ ':'+ datetime.getUTCMinutes()+ 'Uhr ';
-				console.log(times[i]);
+			for(var i = 0; i <= image_array_length; i++) {
 				
 				//add images to the slideshow
-				var i_display = i+1;
-				$(".slideshow-container").prepend('<div class="slideshow-mySlides" > <div class="slideshow-numbertext">'+i_display+'/'+image_array_length+' '+'vom '+times[i]+'</div><img src="'+image_array[i]+'"style="width:100%"></div>');
+				var i_display = i;
+				$(".slideshow-container").prepend('<div class="slideshow-mySlides" > <div class="slideshow-numbertext">'+i_display+'/'+(image_array_length+1)+'</div><img src="'+image_array[i]+'"style="width:100%"></div>');
 				$(".slideshow-row").append('<div class="slideshow-column" ><img class="slideshow-demo cursor" src="'+image_array[i]+'"style="width:100%" id = "'+i+'" onclick="#"></div>');
 			}
-		showSlides(1);
+		slideIndex = showSlides(1);
 		}
+    
 		$(".slideshow-prev" ).click(function() {
-			//if (slideIndex < image_array_length){
-				slideIndex=+1;
-				showSlides(slideIndex);
-			//}
+			if (slideIndex =0){
+				slideIndex-=1;
+			}else if (slideIndex == 0){
+      	slideIndex=image_array_length;
+      }
+      console.log("prev"+slideIndex);
+      showSlides(slideIndex);
 		});
 				
 		$(".slideshow-next" ).click(function() {
-			//if (slideIndex < image_array_length){
-				slideIndex=-1;
-				showSlides(slideIndex);
-			//}
+			if (slideIndex <= image_array_length){
+				slideIndex+=1;	
+			}else if(slideIndex >= image_array_length){
+      	slideIndex=0;
+      }
+      console.log("next"+slideIndex);
+      showSlides(slideIndex);
 		});
-		
-		$(".slideshow-demo" ).click(function(e) {
-			e.preventDefault();
+	
+		$(".cursor" ).click(function() {
 			var id = this.id;
-			console.log(id);
-			showSlides(id+1);
+			console.log("cursor"+id);
+			showSlides(id);
 		});
 		
 	function showSlides(n) {
@@ -174,31 +158,20 @@ $.widget("sv.multimedia_slideshow3", $.sv.widget, {
 	  var slides = document.getElementsByClassName("slideshow-mySlides");
 	  var dots = document.getElementsByClassName("slideshow-demo");
 	  var captionText = document.getElementById("slideshow-caption");
-	  if (n > slides.length) {
-		  slideIndex = 1
-		  }
-	  if (n < 1) {
-		  slideIndex = slides.length
-		  }
+	  
+    //alle Bilder deaktivieren
 	  for (i = 0; i < slides.length; i++) {
-		slides[i].style.display = "none";
+			slides[i].style.display = "none";
 	  }
+    //alle voschaubilder deaktivieren
 	  for (i = 0; i < dots.length; i++) {
-		dots[i].className = dots[i].className.replace(" active", "");
+			dots[i].className = dots[i].className.replace(" active", "");
 	  }
-	  slides[slideIndex-1].style.display = "block";
-	  dots[slideIndex-1].className += " active";
-	  captionText.innerHTML = dots[slideIndex-1].alt;
+    
+    //aktuelles BIld anzeigen, und vorschaubild aktivieren
+	  slides[slideIndex].style.display = "block";
+	  dots[slideIndex].className += " active";
+	  captionText.innerHTML = dots[slideIndex].alt;
+    return slideIndex;
 	} 
 		
-	},
-
-	_repeat: function() {
-
-	},
-
-	_events: {
-	}
-
-});
-
