@@ -1,0 +1,257 @@
+ <!-- Container for the image gallery -->
+<div class="slideshow-container">
+
+  <!-- Full-width images with number text -->
+ <label class="switch">
+  <input type="checkbox" checked>
+  <span class="slider round"></span>
+</label>
+   
+
+  <!-- Next and previous buttons -->
+    <a class="slideshow-prev" onclick="#">&#10094;</a>
+    <a class="slideshow-next" onclick="#">&#10095;</a>
+    
+  <!-- Image text -->
+  <div class="slideshow-caption-container">
+    <p id="slideshow-caption"></p>
+  </div>
+
+  <!-- Thumbnail images -->
+  <div class="slideshow-row">
+
+  </div>
+</div> 
+
+
+		console.log('test_update');
+		var slideIndex = 0;
+		var auto_on= false;
+		//displays slideshop
+		var image_array = ['https://www.w3schools.com/howto/img_woods.jpg', 'https://www.w3schools.com/howto/img_5terre.jpg', 'https://www.w3schools.com/howto/img_mountains.jpg', 'https://www.w3schools.com/howto/img_lights.jpg', 'https://www.w3schools.com/howto/img_nature.jpg','https://www.w3schools.com/howto/img_snow.jpg', 'https://agora42.de/live/wp-content/uploads/2018/10/natur-e1553514503451.jpg', 'https://gesundheit-koerper-seele.com/wp-content/uploads/2018/02/schoenheit_entspannung_natur.jpg'];
+		var image_array_length = image_array.length-1;
+		var times = [];
+	
+		
+		if (Array.isArray(image_array )){
+			for(var i = 0; i <= image_array_length; i++) {
+				
+				//add images to the slideshow
+				var i_display = i+1;
+				$(".slideshow-container").prepend('<div class="slideshow-mySlides" > <div class="slideshow-numbertext">'+i_display+'/'+(image_array_length+1)+'</div><img src="'+image_array[i]+'"style="width:100%"></div>');
+        $(".slideshow-caption").text('test');
+				$(".slideshow-row").append('<div class="slideshow-column" ><img class="slideshow-demo cursor" src="'+image_array[i]+'"style="width:100%" id = "'+i+'" onclick="#"></div>');
+			}
+		slideIndex = showSlides(0);
+		}
+    
+		$(".slideshow-prev" ).click(function() {
+			if (slideIndex >=1){
+				slideIndex-=1;
+			}else if (slideIndex == 0){
+      	//überlauf, von hinten anfangen
+        slideIndex=image_array_length;
+      }
+      console.log("prev"+slideIndex);
+      showSlides(slideIndex);
+		});
+				
+		$(".slideshow-next" ).click(function() {
+			if (slideIndex < image_array_length){
+				slideIndex+=1;	
+			}else if(slideIndex >= image_array_length){
+      	//überlauf von vorne anfangen 
+        slideIndex=0;
+      }
+      console.log("next"+slideIndex);
+      showSlides(slideIndex);
+		});
+	
+		$(".cursor" ).click(function() {
+			var id = this.id;
+      slideIndex = id;
+			console.log("cursor"+id);
+			showSlides(slideIndex);
+		});
+		
+	function showSlides(n) {
+	  var i;
+	  var slides = document.getElementsByClassName("slideshow-mySlides");
+	  var dots = document.getElementsByClassName("slideshow-demo");
+	  var captionText = document.getElementById("slideshow-caption");
+	  console.log("SlideIndex"+slideIndex);
+    //alle Bilder deaktivieren
+	  for (i = 0; i < slides.length; i++) {
+			slides[i].style.display = "none";
+	  }
+    //alle voschaubilder deaktivieren
+	  for (i = 0; i < dots.length; i++) {
+			dots[i].className = dots[i].className.replace(" active", "");
+	  }
+    
+    //aktuelles BIld anzeigen, und vorschaubild aktivieren
+	  slides[slideIndex].style.display = "block";
+	  dots[slideIndex].className += " active";
+	  captionText.innerHTML = dots[slideIndex].alt;
+    return slideIndex;
+	} 
+  
+$(".switch" ).on('change',function() {
+			if ($(this).is(':checked') ){
+      	auto_on = true;
+      }else{
+      	auto_on = false;
+      }
+      console.log("autoscroll"+auto_on);
+		});
+ 
+
+* {
+  box-sizing: border-box;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.slideshow-container {
+  position: relative;
+}
+
+/* Hide the images by default */
+.slideshow-mySlides {
+  display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.slideshow-cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.slideshow-prev,
+.slideshow-next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.slideshow-next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.slideshow-prev:hover,
+.slideshow-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.slideshow-numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.slideshow-caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+}
+
+.slideshow-row: after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+.slideshow-column {
+  float: left;
+  width: 16.66%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.slideshow-demo {
+  opacity: 0.6;
+}
+
+.slideshow-active,
+.slideshow-demo: hover {
+  opacity: 1;
+}
+
+/*Switch*/
+.switch {
+  position: absolute;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  top: 88%;
+  right: 1%;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
