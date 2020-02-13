@@ -1,0 +1,33 @@
+/**
+* Displays a notification toast
+* @param {id} unique id for this widget
+* @param {item} an item witch triggers the popup: NOT 0 open it, 0 close it
+* @param {item} head : "Information ", 
+* @param {item} icon : "'', Warning, Success, Error, Information", 
+* @param {item} text : "Let's test some HTML stuff... ",
+* @param text allowToastClose: true, // Boolean value true or false 
+* @param text showHideTransition : 'slide',  // It can be plain, fade or slide
+* @param text bgColor : 'blue',              // Background color for toast
+* @param text textColor : '#eee',            // text color
+* @param text allowToastClose : false,       // Show the close button or not
+* @param text hideAfter : 5000,              // `false` to make it sticky or time in miliseconds to hide after
+* @param text stack : 5,                     // `false` to show one stack at a time count showing the number of toasts that can be shown at once
+* @param text textAlign : 'left',            // Alignment of text i.e. left, right, center
+* @param text position : 'bottom-left'  		// Toast position on display
+
+*/
+{% macro toast(id, item_trigger, item_message, item_timestamp, title, text, mode) %}
+
+	<span id="{{ uid(page, id) }}" data-widget="status.toast" data-item="{{ item_trigger }}, {{ item_message }}, {{ item_timestamp }}"></span>
+
+	<div id="{{ uid(page, id) }}-message" class="alert" data-role="popup" data-overlay-theme="a" {% if mode == 'error' %} data-dismissible="false" {% endif %}>
+		<div data-role="header" data-theme="c"><h1>{{ title }}</h1></div>
+		<p><span></span>{{ text }}</p>
+	
+		<div class="control">
+			<span class="stamp"></span>
+				<a onClick="$('#{{ uid(page, id) }}-message').popup('close');" data-mini="true" data-icon="check" data-iconpos="top" data-role="button" data-inline="true">OK</a>
+		</div>
+	</div>
+
+{% endmacro %}
