@@ -1,29 +1,44 @@
 /**
 * Displays a notification toast
 * @param {id} unique id for this widget
-* @param {item} an item witch triggers the popup: 1 open it, 0 close it
-* @param {item} head : "Information ", 
-* @param {item} icon : "'', Warning, Success, Error, Information", 
-* @param {item} text : "Let's test some HTML stuff... ",
-* @param (text) allowToastClose: true, // Boolean value true or false 
-* @param (text) showHideTransition : 'slide',  // It can be plain, fade or slide
-* @param (text) bgColor : 'blue',              // Background color for toast
-* @param (text) textColor : '#eee',            // text color
-* @param (text) allowToastClose : false,       // Show the close button or not
-* @param (text) hideAfter : 5000,              // `false` to make it sticky or time in miliseconds to hide after
-* @param (text) stack : 5,                     // `false` to show one stack at a time count showing the number of toasts that can be shown at once
-* @param (text) textAlign : 'left',            // Alignment of text i.e. left, right, center
-* @param (text) position : 'bottom-left'  		// Toast position on display
-
+* @param {item} item_trigger: (true to open, false to close)
+* @param {item=} item_title : an item(optional, text)
+* @param {item=} item_text : an item (optional, text, html)
+* @param {item=} item_icon : an item (optional, info, warning, success, error)
+* @param {item=} item_quitt : an item (optional,)
+* @param {text} text_title : title (optional, text)
+* @param {text} text_text : plain text (optional, text or html)
+* @param {text} text_icon : plain text (optional, info, warning, success, error)
+* @param {value=true} template:  	 (optional, error, warning, info, when set, so paramater must set )
+* @param {value=true} allowToastClose:  	 (optional, true, false)
+* @param {text=slide} showHideTransition (optional, plain, fade, slide)
+* @param {color=gray} bgColor          (optional, gray)
+* @param {color=#eee} textColor        (optional, #eee)
+* @param {value=false} allowToastClose (optional, true, false)
+* @param {text=false} hideAfter (optional,`` to make it sticky or time in miliseconds to hide after)
+* @param {value=5} stack                     // `false` to show one stack at a time count showing the number of toasts that can be shown at once(optional)
+* @param {text=left} textAlign              // Alignment of text i.e. left, right, center(optional)
+* @param {text=bottom-left} position   		// Toast position on display(optional, bottom-left, bottom-right, top-left, top-right....)
+* when a template is given(info, warning, error) then the values must not set otherwise you can change every color ....
+ 
 */
-{% macro toast(id, item_trigger, item_title, item_text,item_icon, param_button, param_allowclose, param_hideafter, param_showhide, param_showloader, param_color,param_loaderbg, param_stack, param_align, param_position ) %}
+{% macro toast(id, item_trigger, item_title, item_text, item_icon, text_title, text_text, text_icon,item_button,text_button, value_button, param_template , param_allowclose, param_hideafter, param_showhide, param_showloader, param_color,param_loaderbg, param_stack, param_align, param_position ) %}
 
-	<span {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.toast" data-item="{{item_trigger}}, {{item_head}}, {{item_text}}, {{item_icon|default('Information')}}"
-	data-bgcolor="{{param_bgColor | default('gray')}}" data-color="{{param_color | default('#9EC600')}}" data-loaderbg="{{param_color | default('#eee')}}" data-align="{{param_align | default('left')}}" data-position="{{param_position | default('bottom-left')}}"
-	data-stack="{{param_stack | default('5')}}" data-showloader="{{param_showloader | default('true')}}" data-hideafter="{{param_hideafter | default('50000')}}" data-allowClose="{{param_allowclose | default('true')}}" data-showhide="{{param_showhide | default('slide')}}">
+	<span {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.toast" 
+		data-item="{{item_trigger}},{{item_title|default('')}}, {{item_text|default('')}}, {{item_icon|default('') }}"
+		data-info="{{text_title|default('')}}, {{text_text|default('')}}, {{text_icon|default('') }}" 
+		data-button="{{text_button|default('OK') }}, {{item_button|default('') }}, {{value_button|default('False') }}"
+		data-template="{{param_template | default('')}}" 
+		data-bgColor="{{param_bgColor | default('gray')}}" 
+		data-color="{{param_color | default('#9EC600')}}" 
+		data-loaderBg="{{param_loaderbg | default('#eee')}}" 
+		data-align="{{param_align | default('left')}}" 
+		data-position="{{param_position | default('bottom-left')}}"
+		data-stack="{{param_stack | default('5')}}" 
+		data-showLoader="{{param_showloader | default('true')}}" 
+		data-hideAfter="{{param_hideafter | default('500000')}}" 
+		data-allowClose="{{param_allowclose | default('True')}}" 
+		data-showHide="{{param_showhide | default('slide')}}">
 
-		<span id = "title">{{item_title}}</span>
-		<span id = "text">{{item_text}}</span>
-		<span id = "icon">{{item_icon}}</span>
 	</span>
 {% endmacro %}
