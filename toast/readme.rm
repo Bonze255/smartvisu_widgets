@@ -1,4 +1,4 @@
-Toast Widget for SmartVisu
+## Toast Widget for SmartVisu
 place the files to  "/dropins/" folder
 
 	{% import "toast.html" as toast %}
