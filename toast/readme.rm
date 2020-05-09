@@ -1,1 +1,17 @@
 Toast Widget for SmartVisu
+place the files to  "/dropins/" folder
+
+	{% import "toast.html" as toast %}
+  info template 
+	{{ toast.toast('test', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}
+  
+  succes template
+	{{ toast.toast('test1', 'trigger.item', '','','','TITEL', 'Lorem Ipsum ','','','success') }}
+	
+  template warning
+  {{ toast.toast('test2', 'trigger.item', '','','','Bewegung erkannt!', '','','warning') }}
+  
+  template error
+	{{ toast.toast('test3', 'trigger.item','', '','','Bewegung!','', '','error','quitt.item','QUITT','') }}
+  
+  its possible to define all parameters at your own 
