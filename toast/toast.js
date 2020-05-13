@@ -105,7 +105,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 			console.log("template free");
 			showIcon = response[3] || this.element.attr('data-text').explode()[2];
 		};
-		//if (response[0] == 1){
+		if (response[0]){
 			
 			console.log("title, text, icon", showTitle, showText, showIcon);
 			var toast = $.toast({
@@ -139,7 +139,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 			$(this).parent().get( 0 ).remove();
 		});
 	
-	},
+		}},
 	
 	_events: {
 	}
