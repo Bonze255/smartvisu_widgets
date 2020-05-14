@@ -44,9 +44,9 @@ $.widget("sv.status_toast", $.sv.widget, {
 		var itemsStr = this.options.item.explode();
 		var items = [];
 		var text = this.element.attr('data-text').explode();
-		console.log("items as String ", itemsStr);
-		console.log("response item daten übergabe",response);
-		console.log("response text daten übergabe",text);
+		//console.log("items as String ", itemsStr);
+		//console.log("response item daten übergabe",response);
+		//console.log("response text daten übergabe",text);
 		var i2 =0;
 		items.push(response[0]);
 		for (var i = 1; i < itemsStr.length; i++) {
@@ -62,7 +62,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 				}
 			}
 		}
-		console.log("gefuellte items", items);
+		//console.log("gefuellte items", items);
 		var showTrigger = items[0];//items[0];
 		var showTitle = items[1];
 		var showText = items[2];
@@ -100,7 +100,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 			bgColor = '#e03d3d';
 			allowClose = false;
 			color = '#FFF';
-			showText+='<br/><input class ="button ui-btn ui-mini ui-corner-all ui-btn-inline"  id ='+timestamp+' type="button" value="'+this.element.attr('data-button').explode()[0]+'" />';
+			showText+='<br/><input class ="button ui-btn ui-mini ui-corner-all ui-btn-inline" id ='+timestamp+' type="button" value="'+this.element.attr('data-button').explode()[0]+'" />';
 		}else{
 			console.log("template free");
 			showIcon = response[3] || this.element.attr('data-text').explode()[2];
