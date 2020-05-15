@@ -3,8 +3,8 @@
 * add to your html
 	{% import "toast.html" as toast %}
 * now you can create Toast Messages!
-a simple info tast, which would automatic disappear after x secondes 
-	{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}
+a simple info tast, which would automatic disappear after x seconds
+{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}
 
 succes Toast
 	{{ toast.toast('id', 'trigger.item', '','','','TITEL', 'Lorem Ipsum ','','','success') }}
@@ -16,6 +16,7 @@ template error
 	{{ toast.toast('id', 'trigger.item','', '','','Bewegung!','', '','error','quitt.item','QUITT','') }}
   
   its possible to define all parameters at your own, because there are many more
+  
 */**
 * Displays a notification toast
 * 4 style templates could be choosen, 'info', 'success', 'warning', 'error' or you define your own style
