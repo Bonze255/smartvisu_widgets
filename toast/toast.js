@@ -19,9 +19,14 @@ $.widget("sv.status_toast", $.sv.widget, {
 		var date = new Date;
 		var timestamp = Date.now();
 		var heute = date.getHours() +":" + date.getMinutes()+":" + date.getSeconds()+" " +date.getDate()+ "."+ (date.getMonth()+ 1)+"." + date.getFullYear()+" <br>";
+		var random = timestamp + getRandomInt(1,25);
 		
-		
-		
+		function getRandomInt(min, max) {
+		  min = Math.ceil(min);
+		  max = Math.floor(max);
+		  return Math.floor(Math.random() * (max - min)) + min;
+		}
+
 		//Style values
 		var bgColor = this.element.attr('data-style').explode()[0];
 		var color = this.element.attr('data-style').explode()[1];
@@ -100,7 +105,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 			bgColor = '#e03d3d';
 			allowClose = false;
 			color = '#FFF';
-			showText+='<br/><input class ="button ui-btn ui-mini ui-corner-all ui-btn-inline" id ='+timestamp+' type="button" value="'+this.element.attr('data-button').explode()[0]+'" />';
+			showText+='<br/><input class ="button ui-btn ui-mini ui-corner-all ui-btn-inline" id ='+random+' type="button" value="'+this.element.attr('data-button').explode()[0]+'" />';
 		}else{
 			console.log("template free");
 			showIcon = response[3] || this.element.attr('data-text').explode()[2];
@@ -129,14 +134,14 @@ $.widget("sv.status_toast", $.sv.widget, {
 	
 
 		$(".button").click(function() {
-			var id = $(this).attr('id');
-			console.log("button pressed "+ id);
+			var button_id = $(this).attr('id');
+			console.log("button pressed "+ button_id);
 			if (sendItem != undefined){
 				io.write(sendItem, sendVal);
 			};
-			
-			console.log($(this).parent().get( 0 ));
-			$(this).parent().get( 0 ).remove();
+
+			console.log("this parent object ",$(this).parent().get( 0 ));
+			$(this).parent().get( 0 ).remove();//select the div from the input
 		});
 	
 		}},
