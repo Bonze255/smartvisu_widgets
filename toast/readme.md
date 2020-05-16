@@ -6,16 +6,17 @@
 a simple info tast, which would automatic disappear after x seconds
 {{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}
 
-succes Toast
-	{{ toast.toast('id', 'trigger.item', '','','','TITEL', 'Lorem Ipsum ','','','success') }}
-	
-template warning
-  	{{ toast.toast('íd', 'trigger.item', '','','','Bewegung erkannt!', '','','warning') }}
+*template success 
+{{ toast.toast('test1', 'sprechanlage.live.bewegungsmelder','','', '',	'Bewegung erkannt',	'TESTEXT', 'success','success') }}
+*template info 		
+{{ toast.toast('test', 'sprechanlage.live.bewegungsmelder', '','sprechanlage.live.live_video', '',	'Bewegung erkannt',	'', '','info') }}	
+*template warning
+ {{ toast.toast('test2', 'sprechanlage.live.bewegungsmelder', '','sprechanlage.live.live_video','','HEADER  Bewegung erkannt!','','','warning') }}
   
-template error
-	{{ toast.toast('id', 'trigger.item','', '','','Bewegung!','', '','error','quitt.item','QUITT','') }}
+*template error
+{{ toast.toast('test3', 'sprechanlage.live.bewegungsmelder','', 'sprechanlage.live.live_video','','Bewegung!','','','error','dg.buero.licht','QUITT','') }}
   
-  its possible to define all parameters at your own, because there are many more
+ its possible to define all parameters at your own, because there are many more
   
 */**
 * Displays a notification toast
