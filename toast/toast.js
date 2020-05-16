@@ -50,7 +50,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 		var items = [];
 		var text = this.element.attr('data-text').explode();
 		//console.log("items as String ", itemsStr);
-		//console.log("response item daten übergabe",response);
+		console.log("response item daten übergabe",response);
 		//console.log("response text daten übergabe",text);
 		var i2 =0;
 		items.push(response[0]);
@@ -83,8 +83,9 @@ $.widget("sv.status_toast", $.sv.widget, {
 			allowClose = true;
 			hideAfter= true;
 			color = '#eee';
-		}else if(this.options.template == 'success '){
+		}else if(this.options.template == 'success'){
 			//console.log("Lade template success");
+			showIcon = 'success';
 			hideAfter = 2000;
 			bgColor = '#1ad600';
 			allowClose = true;
