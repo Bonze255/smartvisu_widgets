@@ -136,8 +136,8 @@ $.widget("sv.status_toast", $.sv.widget, {
 		$(".button").click(function() {
 			var button_id = $(this).attr('id'); //button id holen
 			//console.log("button pressed "+ button_id);
-			if (sendItem == undefined || sendItem == ''){
-				console.log("INFO: Button pressed, but NO Item given ");
+			if (sendItem == undefined || sendItem == ''|| sendItem.indexOf(".") == -1){
+				console.log("INFO: TOAST Button pressed, but NO Item or a string? given ");
 			}else{
 				io.write(sendItem, sendVal);
 			};
