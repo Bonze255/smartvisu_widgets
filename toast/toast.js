@@ -37,8 +37,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 		var showLoader = this.element.attr('data-style').explode()[6];
 		var hideAfter = this.element.attr('data-style').explode()[7];
 		var allowClose = this.element.attr('data-style').explode()[8];
-		var allowToastClose = this.element.attr('data-style').explode()[9];
-		var showHide = this.element.attr('data-style').explode()[10];
+		var showHide = this.element.attr('data-style').explode()[9];
 
 		//Button
 		var sendButton = this.element.attr('data-button').explode()[0];
@@ -50,7 +49,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 		var items = [];
 		var text = this.element.attr('data-text').explode();
 		//console.log("items as String ", itemsStr);
-		console.log("response item daten übergabe",response);
+		//console.log("response item daten übergabe",response);
 		//console.log("response text daten übergabe",text);
 		var i2 =0;
 		items.push(response[0]);
@@ -111,9 +110,10 @@ $.widget("sv.status_toast", $.sv.widget, {
 			this.options.template = "free";//console.log("template free");
 			showIcon = response[3] || this.element.attr('data-text').explode()[2];
 		};
+		
 		if (response[0]){
 			
-			console.log("Template:", this.options.template ,";Title:",showTitle, ";Text:", showText,";Icon:", showIcon);
+			console.log("Template:", this.options.template ,"| Title:",showTitle, "| Text:", showText,"| Icon:", showIcon);
 			var toast = $.toast({
 				text: showText, // Text that is to be shown in the toast
 				heading: showTitle, // Optional heading to be shown on the toast
@@ -130,25 +130,48 @@ $.widget("sv.status_toast", $.sv.widget, {
 				textColor: color
 				
 			});
+			
+			$('#' + id).append(toast);//add toast to widget
 		
-		$('#' + id).append(toast);//add toast to widget
-	
+		
+			//eigenes icon nutzen
+			if (this.element.attr('data-text').explode()[2]){ 
+				var pic = this.element.attr('data-text').explode()[2];
 
-		$(".button").click(function() {
-			var button_id = $(this).attr('id'); //button id holen
-			//console.log("button pressed "+ button_id);
-			if (sendItem == undefined || sendItem == ''|| sendItem.indexOf(".") == -1){
-				console.log("INFO: TOAST Button pressed, but NO Item or a string? given ");
-			}else{
-				io.write(sendItem, sendVal);
+				// add default path if icon has no path
+				if(pic.indexOf('/') == -1){
+					pic = 'icons/ws/'+pic;
+				}else{
+					pic = pic;	
+				};
+				
+				$("div.jq-toast-single").last().addClass('jq-has-icon');
+				$("div.jq-toast-single").last().css({'background-image':'url('+pic+')'}); //button id holen
 			};
-			//console.log("this parent object ",$(this).parent().get( 0 ));
-			//var elem = $(this).find('input[id="'+id+'"]');//selectiere toast mit id 
-			$(this).closest('div').remove();
-
-		});
+		
+		
 	
-		}},
+			//Close by button click
+			$(".button").click(function() {
+				var button_id = $(this).attr('id'); //button id holen
+				//console.log("button pressed "+ button_id);
+				if (sendItem == undefined || sendItem == ''|| sendItem.indexOf(".") == -1){
+					console.log("INFO: TOAST Button pressed, but NO Item or a string? given ");
+				}else{
+					io.write(sendItem, sendVal);
+				};
+				$(this).closest('div').remove();
+			});
+			
+		//close when value = 0
+		//}else{ 
+		//	console.log("should close?",allowClose,hideAfter);
+		//	if(allowClose == true ){
+		//		console.log($(this));
+		//		$(this).remove();
+		//	};
+		}
+	},
 	
 	_events: {
 	}
