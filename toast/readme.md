@@ -1,11 +1,11 @@
 # Toast widget for Smartvisu
-place the files to 
-	* "/dropins/" folder
-add to your html
-	* {% import "toast.html" as toast %}
-now you can create Toast Messages!
-a simple info tast, which would automatic disappear after x seconds
-	* {{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}
+1. place the files to
+ * "/dropins/" folder
+1. add to your html
+ * {% import "toast.html" as toast %}
+1. now you can create Toast Messages!
+ a simple info tast, which would automatic disappear after x seconds
+ * {{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}
 
 template success 
 * {{ toast.toast('id', 'trigger.item','','', '',	'Bewegung erkannt',	'TESTEXT', 'success','success') }}
