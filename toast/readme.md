@@ -7,10 +7,12 @@
  a simple info tast, which would automatic disappear after x seconds
 ```{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}```
 
-template success 
+template success
+
 ```{{ toast.toast('id', 'trigger.item','','', '',	'Bewegung erkannt',	'TESTEXT', 'success','success') }}```
 
-template info 		
+template info
+
 ```{{ toast.toast('id', 'trigger.item', '','sprechanlage.live.live_video', '',	'Bewegung erkannt',	'', '','info') }}```
 
 template warning
