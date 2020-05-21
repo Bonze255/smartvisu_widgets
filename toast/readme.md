@@ -1,25 +1,26 @@
 # Toast widget for Smartvisu
-	* place the files to  "/dropins/" folder
-	* add to your html
-	{% import "toast.html" as toast %}
-	* now you can create Toast Messages!
-	a simple info tast, which would automatic disappear after x seconds
-	{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}
+place the files to 
+	* "/dropins/" folder
+add to your html
+	* {% import "toast.html" as toast %}
+now you can create Toast Messages!
+a simple info tast, which would automatic disappear after x seconds
+	* {{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}
 
-	* template success 
-{{ toast.toast('id', 'trigger.item','','', '',	'Bewegung erkannt',	'TESTEXT', 'success','success') }}
+template success 
+* {{ toast.toast('id', 'trigger.item','','', '',	'Bewegung erkannt',	'TESTEXT', 'success','success') }}
 
-	* template info 		
-{{ toast.toast('id', 'trigger.item', '','sprechanlage.live.live_video', '',	'Bewegung erkannt',	'', '','info') }}
+template info 		
+	* {{ toast.toast('id', 'trigger.item', '','sprechanlage.live.live_video', '',	'Bewegung erkannt',	'', '','info') }}
 
-	* template warning
- {{ toast.toast('id', 'trigger.item', '','sprechanlage.live.live_video','','HEADER  Bewegung erkannt!','','','warning') }}
+template warning
+	* {{ toast.toast('id', 'trigger.item', '','sprechanlage.live.live_video','','HEADER  Bewegung erkannt!','','','warning') }}
   
-	* template error
-{{ toast.toast('id', 'trigger.item','', 'sprechanlage.live.live_video','','Bewegung!','','','error','dg.buero.licht','QUITT','') }}
+template error
+	* {{ toast.toast('id', 'trigger.item','', 'sprechanlage.live.live_video','','Bewegung!','','','error','dg.buero.licht','QUITT','') }}
 
-	* own icon from smartvisu
-{{ toast.toast('test', 'sprechanlage.live.bewegungsmelder', '','',							   '','',				'Test own icon', 'message_bell_door.svg','','','','','true','false') }}
+own icon from smartvisu
+	* {{ toast.toast('test', 'sprechanlage.live.bewegungsmelder', '','',							   '','',				'Test own icon', 'message_bell_door.svg','','','','','true','false') }}
  its possible to define all parameters at your own, because there are many more
   
 */**
