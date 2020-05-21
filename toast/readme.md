@@ -6,18 +6,20 @@
 a simple info tast, which would automatic disappear after x seconds
 {{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}
 
-* template success 
+** template success 
 {{ toast.toast('id', 'trigger.item','','', '',	'Bewegung erkannt',	'TESTEXT', 'success','success') }}
 
-* template info 		
+** template info 		
 {{ toast.toast('id', 'trigger.item', '','sprechanlage.live.live_video', '',	'Bewegung erkannt',	'', '','info') }}
 
-* template warning
+** template warning
  {{ toast.toast('id', 'trigger.item', '','sprechanlage.live.live_video','','HEADER  Bewegung erkannt!','','','warning') }}
   
-* template error
+** template error
 {{ toast.toast('id', 'trigger.item','', 'sprechanlage.live.live_video','','Bewegung!','','','error','dg.buero.licht','QUITT','') }}
-  
+
+** own icon from smartvisu
+{{ toast.toast('test', 'sprechanlage.live.bewegungsmelder', '','',							   '','',				'Test own icon', 'message_bell_door.svg','','','','','true','false') }}
  its possible to define all parameters at your own, because there are many more
   
 */**
