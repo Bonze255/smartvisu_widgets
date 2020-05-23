@@ -121,7 +121,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 				showHideTransition: showHide, // fade, slide or plain
 				allowToastClose: allowClose, // Boolean value true or false
 				hideAfter: hideAfter, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
-				stack: stack, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+				stack: 99, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
 				position: showPosition, // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
 				textAlign: textAlign,  // Text alignment i.e. left, right or center
 				loader: showLoader,  // Whether to show loader or not. True by default
@@ -163,13 +163,14 @@ $.widget("sv.status_toast", $.sv.widget, {
 				$(this).closest('div').remove();
 			});
 			
-		//close when value = 0
-		//}else{ 
-		//	console.log("should close?",allowClose,hideAfter);
-		//	if(allowClose == true ){
-		//		console.log($(this));
-		//		$(this).remove();
-		//	};
+
+		}else{ 
+			if (allowClose){
+				console.log("should close?",allowClose,hideAfter);
+				
+				console.log($(this));
+				$("div.jq-toast-single").last().remove();
+			};
 		}
 	},
 	
