@@ -139,6 +139,9 @@ $.widget("sv.status_toast", $.sv.widget, {
 				var pic = this.element.attr('data-text').explode()[2];
 
 				// add default path if icon has no path
+				if(pic.indexOf('.') == -1){
+					pic = pic+'.svg';
+				};
 				if(pic.indexOf('/') == -1){
 					pic = 'icons/ws/'+pic;
 				}else{
@@ -146,32 +149,30 @@ $.widget("sv.status_toast", $.sv.widget, {
 				};
 				
 				$("div.jq-toast-single").last().addClass('jq-has-icon');
+				$("div.jq-has-icon").last().css({'background-position-x': '5px'}); //button id holen
 				$("div.jq-toast-single").last().css({'background-image':'url('+pic+')'}); //button id holen
 			};
-		
-		
-	
-			//Close by button click
-			$(".button").click(function() {
-				var button_id = $(this).attr('id'); //button id holen
-				//console.log("button pressed "+ button_id);
-				if (sendItem == undefined || sendItem == ''|| sendItem.indexOf(".") == -1){
-					console.log("INFO: TOAST Button pressed, but NO Item or a string? given ");
-				}else{
-					io.write(sendItem, sendVal);
-				};
-				$(this).closest('div').remove();
-			});
-			
 
 		}else{ 
-			if (allowClose){
+			if (allowClose!= false){
 				console.log("should close?",allowClose,hideAfter);
 				
 				console.log($(this));
 				$("div.jq-toast-single").last().remove();
 			};
 		}
+		
+		//Close by button click
+		$(".button").click(function() {
+			var button_id = $(this).attr('id'); //button id holen
+			//console.log("button pressed "+ button_id);
+			if (sendItem == undefined || sendItem == ''|| sendItem.indexOf(".") == -1){
+				console.log("INFO: TOAST Button pressed, but NO Item or a string? given ");
+			}else{
+				io.write(sendItem, sendVal);
+			};
+			$(this).closest('div').remove();
+		});
 	},
 	
 	_events: {
