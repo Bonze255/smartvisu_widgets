@@ -8,15 +8,19 @@
 ```{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}```
 
 template success
+
 ```{{ toast.toast('test1', 'sprechanlage.live.bewegungsmelder','','','','Bewegung erkannt success',	'TESTEXT', '','success') }}```
 
 template info
+
 ```{{ toast.toast('test1', 'sprechanlage.live.bewegungsmelder','','','','Test info',	'TESTEXT', 'message_attention','info') }}```
 
 template warning
+
 ```{{ toast.toast('test2', 'sprechanlage.live.bewegungsmelder', '','sprechanlage.live.live_video','','HEADER  Bewegung erkannt! warning', 	'','','warning') }}```
   
 template error
+
 ```{{ toast.toast('id', 'trigger.item','', 'sprechanlage.live.live_video','','Bewegung!','','','error','dg.buero.licht','QUITT','') }}```
 
 own icon from smartvisu
