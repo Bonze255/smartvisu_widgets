@@ -149,7 +149,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 				};
 				
 				$("div.jq-toast-single").last().addClass('jq-has-icon');
-				$("div.jq-has-icon").last().css({'background-position-x': '5px'}); //button id holen
+				$("div.jq-has-icon").last().css({'background-position-x': '5px','background-size': '3.5em' }); //button id holen
 				$("div.jq-toast-single").last().css({'background-image':'url('+pic+')'}); //button id holen
 			};
 
