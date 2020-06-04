@@ -8,21 +8,19 @@
 ```{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}```
 
 template success
-
-```{{ toast.toast('id', 'trigger.item','','', '',	'Bewegung erkannt',	'TESTEXT', 'success','success') }}```
+```{{ toast.toast('test1', 'sprechanlage.live.bewegungsmelder','','','','Bewegung erkannt success',	'TESTEXT', '','success') }}```
 
 template info
-
-```{{ toast.toast('id', 'trigger.item', '','sprechanlage.live.live_video', '',	'Bewegung erkannt',	'', '','info') }}```
+```{{ toast.toast('test1', 'sprechanlage.live.bewegungsmelder','','','','Test info',	'TESTEXT', 'message_attention','info') }}```
 
 template warning
-```{{ toast.toast('id', 'trigger.item', '','sprechanlage.live.live_video','','HEADER  Bewegung erkannt!','','','warning') }}```
+```{{ toast.toast('test2', 'sprechanlage.live.bewegungsmelder', '','sprechanlage.live.live_video','','HEADER  Bewegung erkannt! warning', 	'','','warning') }}```
   
 template error
 ```{{ toast.toast('id', 'trigger.item','', 'sprechanlage.live.live_video','','Bewegung!','','','error','dg.buero.licht','QUITT','') }}```
 
 own icon from smartvisu
-```{{ toast.toast('test', 'sprechanlage.live.bewegungsmelder', '','',							   '','',				'Test own icon', 'message_bell_door.svg','','','','','true','false') }}```
+```{{ toast.toast('test', 'sprechanlage.live.bewegungsmelder', '','',							   '','',				'Test own icon', 'message_attention','','','','','true','false') }}```
  its possible to define all parameters at your own, because there are many more
   
 */**
