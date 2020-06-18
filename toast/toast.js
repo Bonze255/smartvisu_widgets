@@ -38,7 +38,6 @@ $.widget("sv.status_toast", $.sv.widget, {
 		var hideAfter = this.element.attr('data-style').explode()[7];
 		var allowClose = this.element.attr('data-style').explode()[8];
 		var showHide = this.element.attr('data-style').explode()[9];
-
 		//Button
 		var sendButton = this.element.attr('data-button').explode()[0];
 		var sendItem = this.element.attr('data-button').explode()[1];
@@ -154,7 +153,7 @@ $.widget("sv.status_toast", $.sv.widget, {
 			};
 
 		}else{ 
-			if (allowClose!= false){
+			if (allowClose = true){
 				console.log("should close?",allowClose,hideAfter);
 				
 				console.log($(this));
