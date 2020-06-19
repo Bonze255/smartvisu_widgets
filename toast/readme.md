@@ -4,6 +4,9 @@
 2. add to your html
 ```{% import "toast.html" as toast %}```
 3. now you can create Toast Messages!
+
+The widget is very huge, so everything can changed. There are some templates you can use.
+
  a simple info tast, which would automatic disappear after x seconds
 ```{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}```
 
