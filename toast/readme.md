@@ -7,22 +7,23 @@
 
 The widget is very huge, so everything can changed. There are some templates you can use.
 ![Alt text](docu/example.png?raw=true "Example")
- a simple info tast, which would automatic disappear after x seconds
+
+ a simple info tast(the gray one), which would automatic disappear after x seconds
 ```{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}```
 
-template success
+template success (the green one)
 
 ```{{ toast.toast('test1', 'sprechanlage.live.bewegungsmelder','','','','Bewegung erkannt success',	'TESTEXT', '','success') }}```
 
-template info
+template info (the blue one)
 
 ```{{ toast.toast('test1', 'sprechanlage.live.bewegungsmelder','','','','Test info',	'TESTEXT', 'message_attention','info') }}```
 
-template warning
+template warning(the orange one)
 
 ```{{ toast.toast('test2', 'sprechanlage.live.bewegungsmelder', '','sprechanlage.live.live_video','','HEADER  Bewegung erkannt! warning', 	'','','warning') }}```
   
-template error
+template error(the red one)
 
 ```{{ toast.toast('id', 'trigger.item','', 'sprechanlage.live.live_video','','Bewegung!','','','error','dg.buero.licht','QUITT','') }}```
 
