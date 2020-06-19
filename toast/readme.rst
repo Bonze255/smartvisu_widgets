@@ -1,4 +1,5 @@
 # Toast widget for Smartvisu
+
 ## Installation
 
 1. Dateien zu 
@@ -14,15 +15,18 @@ Am einfachsten ist die Nutzung, wenn die vorgefertigten Templates genutzt werden
 
 ## Templates
 Es  gibt folgende Templates:
-- info
-- success
-- warning
-- error
+1. info
+2. success
+3. warning
+4. error
 
 ```{{ toast.toast('id', 'triggeritem','','','','Test info',	'TESTEXT', 'message_attention','**info**') }}```
+Wenn ein Template genutzt wird, brauchen nach dem template Namen keine weiteren Paramater angegeben werden. 
 
 ## Parameter
+Das Widget kann entweder Inhalte von Items anzeigen, somit ist es sehr dynamisch oder man kann feste Texte hinterlegen , auch eine Mischung von beidem ist möglich!
 
+Falls man den Toast speziell verändern möchte, stehenviele Parameter zur Verfügung.
 * @param {id} unique id for this widget
 * @param {item} item_trigger: (true to open, false to close)
 * @param {item=} item_title : an item(optional, text)
