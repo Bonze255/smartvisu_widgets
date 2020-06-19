@@ -1,29 +1,40 @@
 # Toast widget for Smartvisu
+=========
 
-## Installation
-
-1. Dateien zu 
+.. rubric::Installation
+:name: Installation
+=========
+- Dateien zu 
    "/dropins/" Ordner hinzufügen
-2. ```{% import "toast.html" as toast %}```
+- ```{% import "toast.html" as toast %}```
    zur html Datei hinzufügen
-3. jetzt können die Toast Messages genutzt werden
+- jetzt können die Toast Messages genutzt werden
 
-## Allgemein
+
+.. rubric::Allgemein
+:name: Allgemein
+=========
 Das Widget ist sehr sehr mächtig  und sogut wie jeder Paramater kann verändert werden! 
 ![Alt text](docu/example.png?raw=true "Example")
 Am einfachsten ist die Nutzung, wenn die vorgefertigten Templates genutzt werden, somit muss nur das Template angegeben werden, und die paramater dazu werden automatisch geladen.
 
-## Templates
+
+.. rubric::Templates
+:name: templates
+=========
 Es  gibt folgende Templates:
-1. info
-2. success
-3. warning
-4. error
+- info
+- success
+- warning
+- error
 
 ```{{ toast.toast('id', 'triggeritem','','','','Test info',	'TESTEXT', 'message_attention','**info**') }}```
 Wenn ein Template genutzt wird, brauchen nach dem template Namen keine weiteren Paramater angegeben werden. 
 
-## Parameter
+
+.. rubric::Parameter
+:name: parameter
+=========
 Das Widget kann entweder Inhalte von Items anzeigen, somit ist es sehr dynamisch oder man kann feste Texte hinterlegen , auch eine Mischung von beidem ist möglich!
 
 Falls man den Toast speziell verändern möchte, stehen viele Parameter zur Verfügung.
