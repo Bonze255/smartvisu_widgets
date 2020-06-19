@@ -6,7 +6,7 @@
 3. now you can create Toast Messages!
 
 The widget is very huge, so everything can changed. There are some templates you can use.
-
+![Alt text](docu/example.png?raw=true "Example")
  a simple info tast, which would automatic disappear after x seconds
 ```{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}```
 
