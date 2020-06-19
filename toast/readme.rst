@@ -1,40 +1,28 @@
 # Toast widget for Smartvisu
-1. place the files to
-   "/dropins/" folder
-2. add to your html
-```{% import "toast.html" as toast %}```
-3. now you can create Toast Messages!
+## Installation
 
-The widget is very huge, so everything can changed. There are some templates you can use.
+1. Dateien zu 
+   "/dropins/" Ordner hinzufügen
+2. ```{% import "toast.html" as toast %}```
+   zur html Datei hinzufügen
+3. jetzt können die Toast Messages genutzt werden
+
+## Allgemein
+Das Widget ist sehr sehr mächtig  und sogut wie jeder Paramater kann verändert werden! 
 ![Alt text](docu/example.png?raw=true "Example")
+Am einfachsten ist die Nutzung, wenn die vorgefertigten Templates genutzt werden, somit muss nur das Template angegeben werden, und die paramater dazu werden automatisch geladen.
 
- a simple info tast(the gray one), which would automatic disappear after x seconds
-```{{ toast.toast('id', 'trigger.item', '','','','Bewegung erkannt','', '','','info') }}```
+## Templates
+Es  gibt folgende Templates:
+- info
+- success
+- warning
+- error
 
-template success (the green one)
+```{{ toast.toast('id', 'triggeritem','','','','Test info',	'TESTEXT', 'message_attention','**info**') }}```
 
-```{{ toast.toast('test1', 'sprechanlage.live.bewegungsmelder','','','','Bewegung erkannt success',	'TESTEXT', '','success') }}```
+## Parameter
 
-template info (the blue one)
-
-```{{ toast.toast('test1', 'sprechanlage.live.bewegungsmelder','','','','Test info',	'TESTEXT', 'message_attention','info') }}```
-
-template warning(the orange one)
-
-```{{ toast.toast('test2', 'sprechanlage.live.bewegungsmelder', '','sprechanlage.live.live_video','','HEADER  Bewegung erkannt! warning', 	'','','warning') }}```
-  
-template error(the red one)
-
-```{{ toast.toast('id', 'trigger.item','', 'sprechanlage.live.live_video','','Bewegung!','','','error','dg.buero.licht','QUITT','') }}```
-
-own icon from smartvisu
-```{{ toast.toast('test', 'sprechanlage.live.bewegungsmelder', '','',							   '','',				'Test own icon', 'message_attention','','','','','true','false') }}```
- its possible to define all parameters at your own, because there are many more
-  
-*/**
-* Displays a notification toast
-* 4 style templates could be choosen, 'info', 'success', 'warning', 'error' or you define your own style
-* 
 * @param {id} unique id for this widget
 * @param {item} item_trigger: (true to open, false to close)
 * @param {item=} item_title : an item(optional, text)
