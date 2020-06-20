@@ -51,7 +51,7 @@ item_button:  falls template error genutzt wird, kann  hier ein Item definiert w
 text_button: Text des Buttons der bei Template Error angezeigt wird
 value_button: Wert, der gesendet werden soll, wenn der button betätigt wird
 param_allowclose: gibt an, ob der Toast automatisch geschlossen wird, falls das Trigger item = false wird
-param_hideafter: die Zeit bis der Toast automatisch geschlossen wird (optional,``= sticky oder zeit in millisekunden)
+param_hideafter: die Zeit bis der Toast automatisch geschlossen wird (optional,''= sticky oder zeit in millisekunden)
 param_showhide: erscheinungseffekt des Toasts (optional, plain, fade, slide)
 param_showloader: true/False ob  der Ladebalken angezeigt werden soll
 param_color: Textfarbe
