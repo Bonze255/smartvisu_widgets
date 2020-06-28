@@ -1,0 +1,9 @@
+{% import "toast.html" as toast %}
+	
+
+	{{ toast.toast('toast0', 'trigger.item', '','',							   '','',							'Test own icon', 	'scene_livingroom',	'','','','','true','false') }}
+	{{ toast.toast('toast1', 'trigger.item','','',							   '','Bewegung erkannt success',	'TESTEXT', 			'',					'success') }}
+	{{ toast.toast('toast2', 'trigger.item','','',							   '','Test info',					'TESTEXT', 			'message_attention','info') }}
+	{{ toast.toast('toast3', 'trigger.item', '','sprechanlage.live.live_video','','WARNING!', 					'Someone is watching you!',				'','warning') }}
+	{{ toast.toast('toast4', 'trigger.item','', 'sprechanlage.live.live_video','','Bewegung!',					'', 				'',					'error','button.send.item','buttontext','true') }}
+	{{ toast.toast('toast5', 'trigger.item','', 'sprechanlage.live.live_video','','Bewegung!',					'', 				'',					'error','button.send.item','buttontext','false') }}
