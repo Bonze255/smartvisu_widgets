@@ -1,0 +1,12 @@
+/**
+* Displays a notification round Slider
+
+* when a template is given(info, warning, error) then the values must not set otherwise you can change every color ....
+ 
+*/
+{% macro roundslider(id, item_trigger, value, unit, min, max,step, pre_value, to_value) %}
+
+	<span {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.roundslider" data-item="{{ item_trigger }}" data-values="{{min | default('0')}}, {{max| default('100')}},{{step | default('1')}},{{value}}, {{unit}}, {{pre_value| default('')}}, {{to_value| default('')}}">
+		<div id ="shape" style="margin:auto;margin-top:30px;"></div> 
+	</span>
+{% endmacro %}
