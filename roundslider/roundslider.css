@@ -153,7 +153,7 @@
     border: 1px solid transparent;
     z-index: 10;
 }
-.rs-full .rs-tooltip { top: 75%; left: 50%; }
+.rs-full .rs-tooltip { top: 50%; left: 50%; }
 .rs-bottom .rs-tooltip { top: 0; } 
 .rs-top .rs-tooltip { bottom: 0; }
 .rs-right .rs-tooltip { left: 0; }
@@ -225,58 +225,61 @@
         the border width can be changed via the property -> 'borderWidth'  */
     stroke: #AAAAAA;
 }
-/****************************************
+/*
+Hinzugefuegt
 */
-/* wenn zeiger eingeblendet werden soll! 
-#shape .rs-handle  {
-	background-color: transparent;
-	border: 8px solid transparent;
-	border-right-color: black;
-	margin: -6px 0px 0px 14px !important;
-	border-width: 6px 104px 6px 4px;
+.cell {
+  border: 1px solid #bbb;
+  padding: 20px;
+  width: 33%;
+  float: left;
+  box-sizing: border-box;
+  background: white;
 }
-#shape .rs-handle:before  {
-	display: block;
-	content: " ";
-	position: absolute;
-	height: 22px;
-	width: 22px;
-	background: black;
-	right: -11px;
-	bottom: -11px;
-	border-radius: 100px;
+.rs-overlay {
+  /* a small fix to hide the overlay */
+  border-radius: 1000px 0 0 0;
+  margin-top: 1px;
+  margin-right: 1px;
 }
-*/
+.rs-control {
+  /*border: 1px solid #d7d7d7;*/
+  border-radius: 50%;
+  padding: 1px;
+}
+.rs-range-color {
+  background: #e78c1c;
+}
+.rs-path-color {
+  background: #d7d7d7;
+  opacity: 75;
+}
+.rs-bar .rs-seperator {
+  border-color: #d7d7d7;
+  margin-left: -20px;
+  width: 5px;
+}
+.rs-tooltip-text {
+  font-size: 2.7em;
+  font-style: bold;
+
+}
+.rs-handle-dot {
+  padding: 11px;
+}
+.rs-handle-dot:after {
+  background-color: #000000;
+}
 span.rs-number {
   position: absolute;
   top: -8px;
-  left: -25px;
-  font-size: 15px;
-
+  left: -30px;
+  font-size: 0.8em;
+  font-style: bold;
+  font-family: Arial;
+  color: #50507c;
 }
-  .rs_start, .rs_end {
-    width: 50%;
-    position: absolute;
-    z-index: 100;
-    bottom: 30px;
-}
-.rs_start {
-    left: -50px;
-}
-.rs_end {
-    right: -50px;
-}
-.rs-scale {
-  position: absolute;
-  top: -8px;
-  left: -25px;
-  font-size: 15px;
-}
-.rs-overlay {
-    height: calc(50% + 5px);
-    width: calc(50% + 5px);
-    top: -5px;
-    left: -5px;
-
-    border-radius: 1000px 0 0 0;
+.rs-bar.rs-start .rs-seperator,
+.rs-bar.rs-end .rs-seperator {
+  display: none;
 }

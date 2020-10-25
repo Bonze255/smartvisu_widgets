@@ -4,9 +4,13 @@
 * when a template is given(info, warning, error) then the values must not set otherwise you can change every color ....
  
 */
-{% macro roundslider(id, item_trigger, value, unit, min, max,step, pre_value, to_value) %}
+{% macro roundslider(id, item_trigger, item_value, unit, min, max, step, pre_value, to_value, numbers, radius, handlesize, scale_interval, width, thickness, circleshape, slidertype) %}
 
-	<span {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.roundslider" data-item="{{ item_trigger }}" data-values="{{min | default('0')}}, {{max| default('100')}},{{step | default('1')}},{{value}}, {{unit}}, {{pre_value| default('')}}, {{to_value| default('')}}">
-		<div id ="shape" style="margin:auto;margin-top:30px;"></div> 
-	</span>
+	<div {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.roundslider" data-item=" {{item_trigger }}" data-values="{{item_value}}, {{unit}}, {{pre_value| default('')}}, {{ to_value| default('') }}, {{ numbers| default('false')}}" 
+	data-radius="{{radius | default('120')}}" data-scale_min="{{min | default('0')}}" data_scale_max="{{max| default('100')}}" data-step="{{step | default('1')}}" data-handlesize="{{handlesize | default('20')}}" data-scale_interval="{{scale_interval | default('20')}}"
+	data-width="{{width | default('20')}}" data-thickness="{{thickness | default('0.1')}}" data-circleshape="{{circleshape | default('pie')}}" data-slidertype="{{slidertype | default('min-range')}}"
+	style="margin:auto;margin-top:30px;">
+		<div class="img" id ="{{ uid(page, id) }}" style="margin:auto;margin-top:30px;"></div> 
+		<div class="slider" id ="{{ uid(page, id) }}" style="margin:auto; margin-top:30px;"></div> 
+	</div>
 {% endmacro %}
