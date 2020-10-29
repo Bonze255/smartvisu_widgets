@@ -256,7 +256,7 @@ Hinzugefuegt
 }
 .rs-bar .rs-seperator {
   border-color: #d7d7d7;
-  margin-left: -20px;
+  /*margin-left: -20px;*/
   width: 5px;
 }
 .rs-tooltip-text {
@@ -266,6 +266,7 @@ Hinzugefuegt
 }
 .rs-handle-dot {
   padding: 11px;
+
 }
 .rs-handle-dot:after {
   background-color: #000000;

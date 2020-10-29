@@ -1,16 +1,28 @@
 /**
-* Displays a notification round Slider
+* Displays a round Slider
+@param {id=} unique id for this widget (optional)  
+* @param {item} an item to slide
+* @param {text=} pretext  
+* @param {text=} text after value
+* @param {text=} unit of the values
+* @param {value=0} the minimum value if the slider is moved to total left (optional, default: 0)  
+* @param {value=255} the maximum value if the slider is moved to total right (optional, default: 255)  
+* @param {value=5} step between two values (optional, default: 5)  
+* @param {value=0.1} thickness of the slide line
+* @param {value=120} radius the slide line (optional, default: 120)  
+* @param {value=20} width of the slide line
+* @param {text=} circleshape slider style (like pie, quarter-top-left, quarter-top-right, quarter-bottom-left, quarter-bottom-right, half-top, half-bottom, half-left, half-right, custom-half, custom-quarter)
+* @param {text=} slidertype (default, min-range,range )
+* @param {value=20} handlesize, size of the handle knop  (optional, default: 20)
+* @param {value=20} scale-integer, the scale-divider for the scale
+**/
 
-* when a template is given(info, warning, error) then the values must not set otherwise you can change every color ....
- 
-*/
-{% macro roundslider(id, item_trigger, item_value, unit, min, max, step, pre_value, to_value, numbers, radius, handlesize, scale_interval, width, thickness, circleshape, slidertype) %}
+{% macro roundslider(id, item_value,item_send, icon, unit, min, max, step, pre_value, to_value, numbers, radius, handlesize, scale_interval, width, thickness, circleshape, slidertype) %}
 
-	<div {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.roundslider" data-item=" {{item_trigger }}" data-values="{{item_value}}, {{unit}}, {{pre_value| default('')}}, {{ to_value| default('') }}, {{ numbers| default('false')}}" 
-	data-radius="{{radius | default('120')}}" data-scale_min="{{min | default('0')}}" data_scale_max="{{max| default('100')}}" data-step="{{step | default('1')}}" data-handlesize="{{handlesize | default('20')}}" data-scale_interval="{{scale_interval | default('20')}}"
-	data-width="{{width | default('20')}}" data-thickness="{{thickness | default('0.1')}}" data-circleshape="{{circleshape | default('pie')}}" data-slidertype="{{slidertype | default('min-range')}}"
-	style="margin:auto;margin-top:30px;">
+	<div {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.roundslider" data-item="{{item_value}},{{item_send}}" data-values=" {{unit}}, {{pre_value| default('')}}, {{ to_value| default('') }}, {{ numbers| default('false')}}" 
+	data-radius="{{radius | default('120')}}" data-scale_min="{{min | default('0')}}" data_scale_max="{{max| default('255')}}" data-step="{{step | default('5')}}" data-handlesize="{{handlesize | default('20')}}" data-scale_interval="{{scale_interval | default('20')}}"
+	data-width="{{width | default('20')}}" data-thickness="{{thickness | default('0.1')}}" data-circleshape="{{circleshape | default('pie')}}" data-slidertype="{{slidertype | default('min-range')}}" data-icon="{{icon}}"
+	style="margin:auto;margin-top:30px;"> 
 		<div class="img" id ="{{ uid(page, id) }}" style="margin:auto;margin-top:30px;"></div> 
-		<div class="slider" id ="{{ uid(page, id) }}" style="margin:auto; margin-top:30px;"></div> 
 	</div>
 {% endmacro %}
