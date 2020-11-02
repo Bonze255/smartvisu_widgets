@@ -22,7 +22,29 @@
 	<div {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.roundslider" data-item="{{item_value}},{{item_send}}" data-values=" {{unit}}, {{pre_value| default('')}}, {{ to_value| default('') }}, {{ numbers| default('false')}}" 
 	data-radius="{{radius | default('120')}}" data-scale_min="{{min | default('0')}}" data_scale_max="{{max| default('255')}}" data-step="{{step | default('5')}}" data-handlesize="{{handlesize | default('20')}}" data-scale_interval="{{scale_interval | default('20')}}"
 	data-width="{{width | default('20')}}" data-thickness="{{thickness | default('0.1')}}" data-circleshape="{{circleshape | default('pie')}}" data-slidertype="{{slidertype | default('min-range')}}" data-icon="{{icon}}"
-	style="margin:auto;margin-top:30px;"> 
-		<div class="img" id ="{{ uid(page, id) }}" style="margin:auto;margin-top:30px;"></div> 
+	style="margin:auto; margin-top:30px;"> 
+		<div class="img" id ="{{ uid(page, id) }}" style="margin:auto; margin-top:30px;"></div> 
+	</div>
+{% endmacro %}
+
+
+{% macro rtr_slider(id, item_value, item_send, item_cold, item_on_off, item_hot, icon, unit, min, max, step, pre_value, to_value, numbers, radius, handlesize, scale_interval, width, thickness, circleshape, slidertype) %}
+	<div {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.rtr_slider" data-item="{{item_value}},{{item_send}},{{item_cold}},{{item_on_off}},{{item_hot}}" data-values=" {{unit}}, {{pre_value| default('')}}, {{ to_value| default('') }}, {{ numbers| default('false')}}" 
+	data-radius="{{radius | default('120')}}" data-scale_min="{{min | default('0')}}" data_scale_max="{{max| default('255')}}" data-step="{{step | default('5')}}" data-handlesize="{{handlesize | default('20')}}" data-scale_interval="{{scale_interval | default('20')}}"
+	data-width="{{width | default('20')}}" data-thickness="{{thickness | default('0.1')}}" data-circleshape="{{circleshape | default('pie')}}" data-slidertype="{{slidertype | default('min-range')}}" data-icon="{{icon}}"
+	style="margin:auto; position:absolute;"> 
+		<div id="container" style="position:absolute; margin:auto;">
+			<div class="outerslider" id ="{{ uid(page, id) }}" style="position: absolute;
+			margin:auto; margin-top:30px;"
+			
+			></div>
+			<div class="innerslider" id ="{{ uid(page, id) }}" style="
+				position: absolute;
+				top: 50%;
+				margin-top: 50px;
+				margin-left: 18px;
+				
+				"></div> 
+		</div>
 	</div>
 {% endmacro %}

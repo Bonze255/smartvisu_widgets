@@ -182,13 +182,25 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 	_events: {
 	}
 });
+
 // ----- status_rtr_slider-------------------------------------------------------
 $.widget("sv.status_rtr_slider", $.sv.widget, {
 
-	initSelector: 'span[data-widget="status.rtr_slider"]',
+	initSelector: 'div[data-widget="status.rtr_slider"]',
 
 	options: {
-
+		radius : 120,
+		startangle : 315,
+		handlesize:20,
+		step:0.1,
+		scale_interval:10, 
+		scale_min:5, 
+		scale_max:30, 
+		width:20, 
+		thickness:0.1,
+		circleshape:"full", 
+		slidertype:"min-range",
+		icon:"",
 	},
 
 	_create: function() {
@@ -197,6 +209,7 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 	},
 	
 	_update: function(response) {
+		console.log("RTR SLIDER");
 		var id = this.element.attr('id');
 		var scale_min = this.element.attr('data-values').explode()[0];
 		var scale_max = this.element.attr('data-values').explode()[1];
@@ -209,8 +222,15 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 		var radius = 120;
 		var startangle = 315;
 		var handlesize = 20;
-
-			// Start code current degree in outer slider
+		var endangle= 225;
+		//$("div#"+id).append("<div class ='slider'></div><div id= 'innerslider'><div>");
+		console.log('items', response);
+		//console.log('ist', response[0]);
+		//console.log('soll',response[1]);
+		//console.log('cold',response[2]);
+		//console.log('on_off',response[3]);
+		//console.log('hot',response[4]);
+		// Start code current degree in outer slider
 		// *********
 		var _focusOut = $.fn.roundSlider.prototype._focusOut;
 		$.fn.roundSlider.prototype._focusOut = function(e) {
@@ -220,11 +240,11 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 		  this._handles().children().html(e.handle.value.toFixed(1) + "&deg").rsRotate(-e.handle.angle);
 		  this.input.val(e.handle.value);
 		}
-		// **************
-		// End code current degree in outer slider
-
-		$("#slider").roundSlider({
-		  sliderType: "min-range",
+		
+		// Displays the outer Slider
+		// is the SOLL Value
+		$("#"+id+".outerslider").roundSlider({
+					  sliderType: "min-range",
 		  radius: 120,
 		  showTooltip: false,
 		  value: 15,
@@ -236,26 +256,72 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 		  handleShape: "square",
 		  handleSize: "20,0",
 
-		  create: function() {
-			this._editTooltip();
-			this._handles().append("<div class='inner-handle rs-transition'></div>");
-			this._handles().children().html(this.options.value.toFixed(1) + "&deg").rsRotate(-this._handle2.angle);
-		  },
-		  change: "valueChange",
-		  drag: "valueChange",
-		});
+			svgMode: true,
+			  create: function() {
+				this._editTooltip();
+				this._handles().append("<div class='inner-handle rs-transition'></div>");
+				this._handles().children().html(this.options.value.toFixed(1) + "&deg").rsRotate(-this._handle2.angle);
+			  },
+			  change: "valueChange",
+			  drag: "valueChange",
+			tooltipColor: function (args) {
+				return "white";
+			},
+			rangeColor: function (args) {
+				return "#33B5E5";
+			},
+			pathColor: function (args) {
+				return "#C2E9F7";
+			},
+			borderColor: function (args) {
+				return "transparent";
+			}
+			});
 
-		window.changeTooltip = function(e) {
-		  var val = e.value.toFixed(1),
-			speed;
-		  if (val < 20) speed = "COOLING";
-		  else speed = "HEATING";
-
-		  return "<div>" + speed + "<div>" + "<div2>" + val + "<div2>"
-		}
-
-		$("#inner-slider").roundSlider({
-		  step: "0.1",
+			window.changeTooltip = function(e) {
+			var val = e.value.toFixed(1), info;
+				//response2 = kühlen
+				//response3 = auto
+				//response3 = heizen
+				if (response[2] == 1){
+					$("#"+id+".innerslider").find(".cold").removeClass( "icon0" ).addClass( "icon1" );//css({'fill': 'blue', 'stroke':'blue', 'color':'blue'});
+					console.log('coooling 1');
+					
+				}else{
+					$("#"+id+".innerslider").find(".cold").removeClass( "icon1" ).addClass( "icon0" );
+				};
+				if (response[3] == 1){
+				$("#"+id+".innerslider").find(".on_off").removeClass( "icon0" ).addClass( "icon1" );//.css({'stroke': 'green','fill': 'green', 'color':'green'});
+				console.log('auto1');
+				}else{
+					$("#"+id+".innerslider").find(".on_off").removeClass( "icon1" ).addClass( "icon0" );
+				};
+				if (response[4]== 1){
+					$("#"+id+".innerslider").find(".hot").removeClass( "icon0" ).addClass( "icon1" );//.css({'fill': '#FF0000', 'stroke':'#FF0000', 'color':'#FF0000'});
+					console.log('heizen 1');
+				}else{
+					$("#"+id+".innerslider").find(".hot").removeClass( "icon1" ).addClass( "icon0" );
+				};
+				
+				if (val < response[1]){
+					info = "COOLING";
+					console.log("=>COOLING");
+				}else{
+					info = "HEATING";
+					console.log("=>HEATING");
+				};
+				$("#"+id).find(".inner-handle").css({
+					'position': 'absolute',
+					'left': '-35px'}
+					);	
+			  //return "<div style='font-size:1em;'>" + info + "<div>" + "<div2>" + val + "<div2>"
+			  return "<div style='margin-top:-1em'>" + val + "<div2>";
+			};
+			// Displays the inner Slider
+			// is the IST Value
+	
+	$("#"+id+".innerslider").roundSlider({
+		   step: "0.1",
 		  min: "5",
 		  max: "30",
 		  sliderType: "min-range",
@@ -269,18 +335,45 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 		  handleSize: "35,10",
 		  tooltipFormat: "changeTooltip",
 		  editableTooltip: false,
-
-		  create: function() {
-			var that = this;
-			var btn1 = $("<button id='sub'>&#9660</button>");
-			var btn2 = $("<button id='add'>&#9650</button>");
-			this.innerBlock.append(btn1);
-			this.innerBlock.append(btn2);
+		  svgMode: true,
+		tooltipColor: function (args) {
+			return "white";
+		},
+		rangeColor: function (args) {
+			return "transparent";
+		},
+		pathColor: function (args) {
+			return "transparent";
+		},
+		borderColor: function (args) {
+			return "transparent";
+		},
+		create: function() {
+			 $("#"+id).find(".inner-handle").css({
+				 'position': 'absolute',
+					'left': '-35px'}
+				 );
+			var that = $("#"+id).find(".inner-handle");	
+			var icon1 = $("<img class='icon icon0 cold ' style='position:absolute; top: 55%; margin-bottom:20px; left: 20px;' src='icons/ws/sani_cooling.svg'/>");
+			var icon2  = $("<img class='icon icon0 on_off' style='position: absolute; top: 55%; margin-bottom:20px; left: 75px;' src='icons/ws/sani_floor_heating.svg'/>");
+			var icon3  = $("<img class='icon icon0 hot' style='position: absolute; top: 55%; margin-bottom:20px; right: 20px;' src='icons/ws/sani_floor_heating.svg'/>");
+			
+			$("#"+id+".innerslider").find(".rs-inner-container").append(icon1, icon2, icon3);
+			var btn1 = $("<button id='sub' class='ui-btn ui-mini ui-corner-all ui-btn-inline' style='position: absolute; top: 75%;  left: 35px;'>&#9660</button>");
+			var btn2 = $("<button id='onoff' class='ui-btn ui-mini ui-corner-all ui-btn-inline' style='position: absolute; top: 75%;  left: 78px;'>on/off</button>");
+			var btn3 = $("<button id='add' class='ui-btn ui-mini ui-corner-all ui-btn-inline' style='position: absolute; top: 75%; right: 35px;'>&#9650</button>");
+			$("#"+id+".innerslider").find(".rs-inner-container").append(btn1, btn2, btn3);
+		
 			btn1.click(function() {
-			  that.setValue(that.options.value - 0.1);
+			  //this.setValue(this.options.value - 0.1);
+			  console.log("minus");
 			});
 			btn2.click(function() {
-			  that.setValue(that.options.value + 0.1);
+			  console.log("öln-öff");
+			});
+			btn3.click(function() {
+			 // that.setValue(that.options.value + 0.1);
+			 console.log("plus");
 			});
 		  }
 		});
