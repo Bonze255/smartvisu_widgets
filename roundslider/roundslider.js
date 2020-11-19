@@ -50,7 +50,27 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		console.log("Value item ",user_value_item);
 		console.log("Value send ",response[1] );
 		// generiert die scale-nummern
-		//s
+		//get colours from css theme
+		// path color
+		// border color
+		// font color 
+		// handle
+		// scala =  path color
+		// handle shadow =  path_color
+		
+		var bg_color = $('.ui-bar-b').css('background-color');
+		var font_color = $('.ui-bar-b').css('color');
+		var track_color = $('.ui-bar-a').css('background-color');
+		var path_color = $(".ui-bar-a").css('background-color');
+		var border_color = $(".ui-bar-b").css('border-bottom-color');
+		var handle_color = $(".ui-page-theme-a.ui-btn").css('background-color');
+		console.log("bg color ",bg_color );
+		console.log("track color ",track_color );
+		console.log("path color ",path_color );
+		console.log("handle color ",handle_color );
+		console.log("border color ",border_color );
+		console.log("font color ", font_color );
+		
 		if (scale == "true"){
 			$.fn.roundSlider.prototype.defaults.create = function() {
 			  var o = this.options;
@@ -65,7 +85,8 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				}).appendTo(numberTag);
 				number.removeClass().addClass("rs-number").html(i).rsRotate(-angle);
 				$("span.rs-number").css("color","#875009"); 
-				$(".rs-seperator ").css("border-color","#875009");
+				//$(".rs-seperator ").css("border-color","#875009");
+				$(".rs-seperator ").css("border-color",border_color );
 				$(".rs-seperator ").css("border-width","2px");
 				$(".rs-seperator ").css("width","10px");
 				$(".rs-seperator ").css("margin-left","-10px"); 
@@ -76,7 +97,8 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				var angle = this._valueToAngle(i);
 				var numberTag = this._addSeperator(angle, "rs-custom_1");
 				numberTag.addClass( "rs-seperator_1" );
-				$("rs-seperator_1").css("border-color","#875009");
+				//$("rs-seperator_1").css("border-color","#875009");
+				$("rs-seperator_1").css("border-color",border_color );
 				$("rs-seperator_1").css("border-width","2px");
 				$("rs-seperator_1").css("width","5px");
 				$("rs-seperator_1").css("height","1px");
@@ -86,7 +108,10 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 			};
 		};
 		$(".rs-handle").css('box-shadow', '0px 0px 15px #875009');
-		$(".rs-handle").css('background-color', '#ee921e');
+		$(".rs-handle").css('box-shadow', handle_color );
+		//$(".rs-handle").css('background-color', '#ee921e');
+		$(".rs-handle").css('background-color', handle_color );
+		
 		//$(".rs-handle").css('border', ' 1px solid black');
 		//falls trigger= array und value gesetzt
 		//dann müssen 2 items übermittelt werden, 1 das triggeritem bzw die daten 
@@ -137,16 +162,19 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 					
 			},
 			tooltipColor: function (args) {
-				return "white";
+				//return "white";
+				return font_color;
 			},
 			rangeColor: function (args) {
-				return "#ee921e";
+				//return "#ee921e";
+				return bg_color;
 			},
 			pathColor: function (args) {
-				return "#875009";
+				//return "#875009";
+				return path_color;
 			},
 			borderColor: function (args) {
-				return "#875010";
+				return border_color;
 			}//,
 			//create: function(args){
 			//	$(".rs-path").css('box-shadow:', '0px 0px 15px  red');
@@ -173,10 +201,33 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 					};
 					return "<img src="+icon +" style='width:100%; margin:auto; margin-bottom: 0em; margin-top:-2em; clip-path: circle(); display:block !important;'><div id='value' style='font-weight:bold;font-size:1em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.5em;'>"+to_value+unit+"</div>";;
 				}else{
-					return "<div id='rs_value_pre' style='font-size:0.5em; '>"+ pre_value +"</div><div id='value' style='font-weight:bold;font-size:1em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.5em;'>"+to_value+unit+"</div>";
+					return "<div id='rs_value_pre' style='font-size:0.4em; '>"+ pre_value +"</div><div id='value' style='font-weight:bold;font-size:0.8em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.4em;'>"+to_value+unit+"</div>";
 				}
 			
 			}
+			
+		// function getCurrentThemeColors(){
+			// if (process.browser){
+				// const style = getComputedStyle(document.body);
+				// const theme = {
+					// colors: {
+						// primary: style.getPropertyValue('--primary'),
+						// secondary: style.getPropertyValue('--secondary'),
+						// success: style.getPropertyValue('--success'),
+						// info: style.getPropertyValue('--info'),
+						// warning: style.getPropertyValue('--warning'),
+						// danger: style.getPropertyValue('--danger'),
+						// light: style.getPropertyValue('--light'),
+						// dark: style.getPropertyValue('--dark'),
+					// },
+					// font: {
+						// size: Number(window.getComputedStyle(document.body).getPropertyValue('font-size').match(/\d+/)[0]),
+						// type: window.getComputedStyle(document.body).getPropertyValue('font-family')
+					// }
+				// };
+				// return theme;
+			// }    
+		// };
 	},
 	
 	_events: {
