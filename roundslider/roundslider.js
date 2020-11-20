@@ -31,6 +31,8 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		var user_value = response[0];
 		var user_value_length = 0;
 		var user_data_send = response[1];
+		//eventuell fixed width?! 
+		this.options.handlesize = this.options.width +15;
 		if (Array.isArray(user_value)){
 			user_value_length = user_value.length;
 			user_value= user_value_length;
@@ -60,10 +62,10 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		
 		var bg_color = $('.ui-bar-b').css('background-color');
 		var font_color = $('.ui-bar-b').css('color');
-		var track_color = $('.ui-bar-a').css('background-color');
+		var track_color = $('.ui-bar-a').css('background-image');
 		var path_color = $(".ui-bar-a").css('background-color');
 		var border_color = $(".ui-bar-b").css('border-bottom-color');
-		var handle_color = $(".ui-page-theme-a.ui-btn").css('background-color');
+		var handle_color = $(".ui-page-theme-a.ui-btn").css('background-image');
 		console.log("bg color ",bg_color );
 		console.log("track color ",track_color );
 		console.log("path color ",path_color );
@@ -74,7 +76,7 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		if (scale == "true"){
 			$.fn.roundSlider.prototype.defaults.create = function() {
 			  var o = this.options;
-			  for (var i = o.min; i <= o.max-1; i += scale_interval) {
+			  for (var i = o.min; i <= o.max; i += scale_interval) {
 				var angle = this._valueToAngle(i);
 				var numberTag = this._addSeperator(angle, "rs-custom");
 				var number = numberTag.children();
@@ -84,16 +86,16 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				  "margin-right": '10px',
 				}).appendTo(numberTag);
 				number.removeClass().addClass("rs-number").html(i).rsRotate(-angle);
-				$("span.rs-number").css("color","#875009"); 
+				$(".rs-number").css("color",font_color); 
 				//$(".rs-seperator ").css("border-color","#875009");
-				$(".rs-seperator ").css("border-color",border_color );
-				$(".rs-seperator ").css("border-width","2px");
-				$(".rs-seperator ").css("width","10px");
-				$(".rs-seperator ").css("margin-left","-10px"); 
+				$(".rs-seperator").css("border-color",border_color );
+				$(".rs-seperator").css("border-width","2px");
+				$(".rs-seperator").css("width","10px");
+				$(".rs-seperator").css("margin-left","-10px"); 
 				
 			  };
 			  var interval = scale_interval/2;
-			  for (var i = o.min; i <= o.max-1; i += interval) {
+			  for (var i = o.min; i <= o.max; i += interval) {
 				var angle = this._valueToAngle(i);
 				var numberTag = this._addSeperator(angle, "rs-custom_1");
 				numberTag.addClass( "rs-seperator_1" );
@@ -107,11 +109,12 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 			  };
 			};
 		};
-		$(".rs-handle").css('box-shadow', '0px 0px 15px #875009');
-		$(".rs-handle").css('box-shadow', handle_color );
-		//$(".rs-handle").css('background-color', '#ee921e');
-		$(".rs-handle").css('background-color', handle_color );
 		
+		$(this).find("rs-handle").css('box-shadow', '0px 0px 15px #875009');
+		$(this).find("rs-handle").css('box-shadow', handle_color );
+		//$(".rs-handle").css('background-color', '#ee921e');
+		$(".rs-handle").css('background-image', handle_color );
+		$(".rs-range").css('background-image', track_color )
 		//$(".rs-handle").css('border', ' 1px solid black');
 		//falls trigger= array und value gesetzt
 		//dann müssen 2 items übermittelt werden, 1 das triggeritem bzw die daten 
@@ -123,7 +126,7 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				console.log("Value numerisch und index des arrays", user_index);
 				var val = $("div#"+id).roundSlider("option", "value");
 				console.log(val);
-				$(".rs-tooltip").prepend("<img src="+user_trigger[val]+" width='25%' style='border-radius: 100%;-webkit-border-radius: 100%;-moz-border-radius: 100%;>");
+				$(this).find("rs-tooltip").prepend("<img src="+user_trigger[val]+" width='25%' style='border-radius: 100%;-webkit-border-radius: 100%;-moz-border-radius: 100%;>");
 				
 			};
 		};
@@ -153,7 +156,7 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 					console.log("Value",args.value);
 					console.log("Item",user_value_item[1]);
 					io.write(user_value_item[1], args.value);
-					$("#"+id).find(".img").append("<img  src="+user_value[args.value]+" style='clip-path: circle(); '>")
+					$("#"+id).find("img").append("<img  src="+user_value[args.value]+" style='clip-path: circle(); '>")
 				}else{
 					console.log("Value",args.value);
 					console.log("Item",user_value_item[0]);
@@ -205,29 +208,7 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				}
 			
 			}
-			
-		// function getCurrentThemeColors(){
-			// if (process.browser){
-				// const style = getComputedStyle(document.body);
-				// const theme = {
-					// colors: {
-						// primary: style.getPropertyValue('--primary'),
-						// secondary: style.getPropertyValue('--secondary'),
-						// success: style.getPropertyValue('--success'),
-						// info: style.getPropertyValue('--info'),
-						// warning: style.getPropertyValue('--warning'),
-						// danger: style.getPropertyValue('--danger'),
-						// light: style.getPropertyValue('--light'),
-						// dark: style.getPropertyValue('--dark'),
-					// },
-					// font: {
-						// size: Number(window.getComputedStyle(document.body).getPropertyValue('font-size').match(/\d+/)[0]),
-						// type: window.getComputedStyle(document.body).getPropertyValue('font-family')
-					// }
-				// };
-				// return theme;
-			// }    
-		// };
+
 	},
 	
 	_events: {
