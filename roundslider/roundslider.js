@@ -36,36 +36,31 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		if (Array.isArray(user_value)){
 			user_value_length = user_value.length;
 			user_value= user_value_length;
-			console.log("USer Value 1, is array und hat länge ",user_value_length);
+			console.log("Array übergeben mit länge",user_value_length);
 		};
+		
 		var user_value_item = this.options.item.explode();
-		//var user_value = this.element.attr('data-values').explode()[0];
 		var unit = this.element.attr('data-values').explode()[0];
 		var pre_value = this.element.attr('data-values').explode()[1];
 		var to_value = this.element.attr('data-values').explode()[2];
 		var scale = this.element.attr('data-values').explode()[3];
 		var scale_interval = this.options.scale_interval;
 		
+		//get colours from css theme
+		var bg_color = $('.ui-bar-b').css('background-color');
+		var font_color = $('.ui-content').css('color');
+		var track_color = $('.ui-bar-a').css('background-image');
+		var path_color = $(".ui-bar-a").css('background-color');
+		var border_color = $(".ui-bar-b").css('border-bottom-color');
+		var handle_color = $(".ui-page-theme-a.ui-btn").css('background-image');
+		
+		
+		console.log("###################DEBUG:");	
 		console.log("Value1 ",response[0]);
 		console.log("Value2 ",response[1]);
 		console.log("Value length ",user_value_length);
 		console.log("Value item ",user_value_item);
 		console.log("Value send ",response[1] );
-		// generiert die scale-nummern
-		//get colours from css theme
-		// path color
-		// border color
-		// font color 
-		// handle
-		// scala =  path color
-		// handle shadow =  path_color
-		
-		var bg_color = $('.ui-bar-b').css('background-color');
-		var font_color = $('.ui-bar-b').css('color');
-		var track_color = $('.ui-bar-a').css('background-image');
-		var path_color = $(".ui-bar-a").css('background-color');
-		var border_color = $(".ui-bar-b").css('border-bottom-color');
-		var handle_color = $(".ui-page-theme-a.ui-btn").css('background-image');
 		console.log("bg color ",bg_color );
 		console.log("track color ",track_color );
 		console.log("path color ",path_color );
@@ -73,7 +68,9 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		console.log("border color ",border_color );
 		console.log("font color ", font_color );
 		
+		// generiert die scale-nummern
 		if (scale == "true"){
+			//scala ungerade striche (lang)
 			$.fn.roundSlider.prototype.defaults.create = function() {
 			  var o = this.options;
 			  for (var i = o.min; i <= o.max; i += scale_interval) {
@@ -87,19 +84,18 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				}).appendTo(numberTag);
 				number.removeClass().addClass("rs-number").html(i).rsRotate(-angle);
 				$(".rs-number").css("color",font_color); 
-				//$(".rs-seperator ").css("border-color","#875009");
 				$(".rs-seperator").css("border-color",border_color );
 				$(".rs-seperator").css("border-width","2px");
 				$(".rs-seperator").css("width","10px");
 				$(".rs-seperator").css("margin-left","-10px"); 
 				
 			  };
+			  //scala gerade striche (kurz)
 			  var interval = scale_interval/2;
 			  for (var i = o.min; i <= o.max; i += interval) {
 				var angle = this._valueToAngle(i);
 				var numberTag = this._addSeperator(angle, "rs-custom_1");
 				numberTag.addClass( "rs-seperator_1" );
-				//$("rs-seperator_1").css("border-color","#875009");
 				$("rs-seperator_1").css("border-color",border_color );
 				$("rs-seperator_1").css("border-width","2px");
 				$("rs-seperator_1").css("width","5px");
@@ -110,12 +106,11 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 			};
 		};
 		
-		$(this).find("rs-handle").css('box-shadow', '0px 0px 15px #875009');
-		$(this).find("rs-handle").css('box-shadow', handle_color );
-		//$(".rs-handle").css('background-color', '#ee921e');
+		$(".rs-handle").css('box-shadow', '0px 0px 15px #875009');
+		$(".rs-handle").css('box-shadow', handle_color );
 		$(".rs-handle").css('background-image', handle_color );
 		$(".rs-range").css('background-image', track_color )
-		//$(".rs-handle").css('border', ' 1px solid black');
+
 		//falls trigger= array und value gesetzt
 		//dann müssen 2 items übermittelt werden, 1 das triggeritem bzw die daten 
 		//und das 2te , an welches der ausgewählte wert gesendet werden soll
@@ -126,11 +121,11 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				console.log("Value numerisch und index des arrays", user_index);
 				var val = $("div#"+id).roundSlider("option", "value");
 				console.log(val);
-				$(this).find("rs-tooltip").prepend("<img src="+user_trigger[val]+" width='25%' style='border-radius: 100%;-webkit-border-radius: 100%;-moz-border-radius: 100%;>");
+				$(this).find("rs-tooltip").prepend("<img src="+user_trigger[val]+" width='1em' style='border-radius: 100%;-webkit-border-radius: 100%;-moz-border-radius: 100%;>");
 				
 			};
 		};
-		
+	//eigentlicher Aufruf roundslider	
 	$("div#"+id).roundSlider({
 		circleShape: this.options.circleshape,
 		sliderType: this.options.slidertype,
@@ -149,14 +144,14 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 			tooltipFormat: 'changeTooltip',
 			
 			drag: function (args) {
-				console.log("FIRE DRAGGING!");
+
 				//user_trigger =  array mit bildern
 				//user_data_send = item welches beschrieben werden soll
 				if (Array.isArray(user_value)){
 					console.log("Value",args.value);
 					console.log("Item",user_value_item[1]);
 					io.write(user_value_item[1], args.value);
-					$("#"+id).find("img").append("<img  src="+user_value[args.value]+" style='clip-path: circle(); '>")
+					$("#"+id).find("img").append("<img  src="+user_value[args.value]+" style='width: 2em; clip-path: circle(); '>")
 				}else{
 					console.log("Value",args.value);
 					console.log("Item",user_value_item[0]);
@@ -164,16 +159,17 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				}
 					
 			},
+			change: function (args) {
+				io.write(user_value_item[0], args.value);
+	
+			},
 			tooltipColor: function (args) {
-				//return "white";
 				return font_color;
 			},
 			rangeColor: function (args) {
-				//return "#ee921e";
 				return bg_color;
 			},
 			pathColor: function (args) {
-				//return "#875009";
 				return path_color;
 			},
 			borderColor: function (args) {
@@ -191,7 +187,7 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				console.log("icon übergebn", icon);
 				if (Array.isArray(user_value)){
 					
-					return "<img src="+user_value[val] +" style='width:100%; margin:auto; margin-bottom: 0em; border-radius: 30%; -webkit-border-radius: 50%; -moz-border-radius: 50%;display:block !important;'>";
+					return "<img src="+user_value[val] +" style='width:1em; margin:auto; margin-bottom: 0em; border-radius: 30%; -webkit-border-radius: 50%; -moz-border-radius: 50%;display:block !important;'>";
 				}else if (icon != ''){
 					//add default path if icon has no path
 					if(icon.indexOf('.') == -1){
@@ -202,7 +198,7 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 					}else{
 						icon = icon;	
 					};
-					return "<img src="+icon +" style='width:100%; margin:auto; margin-bottom: 0em; margin-top:-2em; clip-path: circle(); display:block !important;'><div id='value' style='font-weight:bold;font-size:1em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.5em;'>"+to_value+unit+"</div>";;
+					return "<img src="+icon +" style='width:2em; margin:auto; margin-bottom: 0em; margin-top:-2em; clip-path: circle(); display:block !important;'><div id='value' style='font-weight:bold;font-size:1em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.5em;'>"+to_value+unit+"</div>";;
 				}else{
 					return "<div id='rs_value_pre' style='font-size:0.4em; '>"+ pre_value +"</div><div id='value' style='font-weight:bold;font-size:0.8em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.4em;'>"+to_value+unit+"</div>";
 				}
@@ -257,11 +253,36 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 		var endangle= 225;
 		//$("div#"+id).append("<div class ='slider'></div><div id= 'innerslider'><div>");
 		console.log('items', response);
-		//console.log('ist', response[0]);
-		//console.log('soll',response[1]);
-		//console.log('cold',response[2]);
-		//console.log('on_off',response[3]);
-		//console.log('hot',response[4]);
+		//item_value, item_actual, item_set, item_comfort, item_night, item_frost, item_state
+		//console.log('value', response[0]);
+		//console.log('actual',response[1]);
+		//console.log('set',response[2]);
+		//console.log('comfort',response[3]);
+		//console.log('night',response[4]);
+		//console.log('frost',response[5]);
+		//console.log('state',response[6]);
+		// item_actual =ist
+		// a item for the actual temperature
+		// item_set = soll
+		// a item for the set temperature
+		// item_comfort
+		// a item for comfort / standby (3x bit or 1x byte)
+		// item_night
+		// a item for night (3x bit or 1x byte)
+		// item_frost
+		// a item for frost (3x bit or 1x byte)
+		// item_state  = on/off from the actor
+		// a item for the current state of the actor
+		//get colours from css theme
+		var bg_color = $('.ui-bar-b').css('background-color');
+		var font_color = $('.ui-content').css('color');
+		var track_color = $('.ui-bar-a').css('background-image');
+		var path_color = $(".ui-bar-a").css('background-color');
+		var border_color = $(".ui-bar-b").css('border-bottom-color');
+		var handle_color = $(".ui-page-theme-a.ui-btn").css('background-image');
+		
+		
+		
 		// Start code current degree in outer slider
 		// *********
 		var _focusOut = $.fn.roundSlider.prototype._focusOut;
@@ -276,10 +297,10 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 		// Displays the outer Slider
 		// is the SOLL Value
 		$("#"+id+".outerslider").roundSlider({
-					  sliderType: "min-range",
+		  sliderType: "min-range",
 		  radius: 120,
 		  showTooltip: false,
-		  value: 15,
+		  value: response[0],
 		  circleShape: "full",
 		  startAngle: "315",
 		  endAngle: "225",
@@ -296,17 +317,18 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 			  },
 			  change: "valueChange",
 			  drag: "valueChange",
+			  
 			tooltipColor: function (args) {
-				return "white";
+				return font_color;
 			},
 			rangeColor: function (args) {
-				return "#33B5E5";
+				return track_color;
 			},
 			pathColor: function (args) {
-				return "#C2E9F7";
+				return path_color;
 			},
 			borderColor: function (args) {
-				return "transparent";
+				return border_color;
 			}
 			});
 
@@ -315,25 +337,8 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 				//response2 = kühlen
 				//response3 = auto
 				//response3 = heizen
-				if (response[2] == 1){
-					$("#"+id+".innerslider").find(".cold").removeClass( "icon0" ).addClass( "icon1" );//css({'fill': 'blue', 'stroke':'blue', 'color':'blue'});
-					console.log('coooling 1');
-					
-				}else{
-					$("#"+id+".innerslider").find(".cold").removeClass( "icon1" ).addClass( "icon0" );
-				};
-				if (response[3] == 1){
-				$("#"+id+".innerslider").find(".on_off").removeClass( "icon0" ).addClass( "icon1" );//.css({'stroke': 'green','fill': 'green', 'color':'green'});
-				console.log('auto1');
-				}else{
-					$("#"+id+".innerslider").find(".on_off").removeClass( "icon1" ).addClass( "icon0" );
-				};
-				if (response[4]== 1){
-					$("#"+id+".innerslider").find(".hot").removeClass( "icon0" ).addClass( "icon1" );//.css({'fill': '#FF0000', 'stroke':'#FF0000', 'color':'#FF0000'});
-					console.log('heizen 1');
-				}else{
-					$("#"+id+".innerslider").find(".hot").removeClass( "icon1" ).addClass( "icon0" );
-				};
+				
+				
 				
 				if (val < response[1]){
 					info = "COOLING";
@@ -346,12 +351,43 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 					'position': 'absolute',
 					'left': '-35px'}
 					);	
+				
+			
 			  //return "<div style='font-size:1em;'>" + info + "<div>" + "<div2>" + val + "<div2>"
 			  return "<div style='margin-top:-1em'>" + val + "<div2>";
 			};
 			// Displays the inner Slider
 			// is the IST Value
-	
+		//frost
+		if (response[3] == 1){
+			$("#"+id+".innerslider").find(".freeze").removeClass( "icon0" ).addClass( "icon1" );//css({'fill': 'blue', 'stroke':'blue', 'color':'blue'});
+			console.log('coooling 1');
+			
+		}else{
+			$("#"+id+".innerslider").find(".freeze").removeClass( "icon1" ).addClass( "icon0" );
+		};
+		//night
+		if (response[4]== 1){
+			$("#"+id+".innerslider").find(".night").removeClass( "icon0" ).addClass( "icon1" );//.css({'fill': '#FF0000', 'stroke':'#FF0000', 'color':'#FF0000'});
+			console.log('heizen 1');
+		}else{
+			$("#"+id+".innerslider").find(".night").removeClass( "icon1" ).addClass( "icon0" );
+		};
+		
+		//komfort
+		if (response[5]== 1){
+			$("#"+id+".innerslider").find(".comfort").removeClass( "icon0" ).addClass( "icon1" );//.css({'fill': '#FF0000', 'stroke':'#FF0000', 'color':'#FF0000'});
+			console.log('heizen 1');
+		}else{
+			$("#"+id+".innerslider").find(".comfort").removeClass( "icon1" ).addClass( "icon0" );
+		};
+		//actuator  status
+		if (response[6] == 1){
+			$("#"+id+".innerslider").find(".status").removeClass( "icon0" ).addClass( "icon1" );//.css({'stroke': 'green','fill': 'green', 'color':'green'});
+			console.log('auto1');
+		}else{
+			$("#"+id+".innerslider").find(".status").removeClass( "icon1" ).addClass( "icon0" );
+		};
 	$("#"+id+".innerslider").roundSlider({
 		   step: "0.1",
 		  min: "5",
@@ -364,7 +400,7 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 		  startAngle: "315",
 		  endAngle: "225",
 		  handleShape: "square",
-		  handleSize: "35,10",
+		  handleSize: "60,10",
 		  tooltipFormat: "changeTooltip",
 		  editableTooltip: false,
 		  svgMode: true,
@@ -385,7 +421,7 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 				 'position': 'absolute',
 					'left': '-35px'}
 				 );
-			var that = $("#"+id).find(".inner-handle");	
+			
 			var icon1 = $("<img class='icon icon0 cold ' style='position:absolute; top: 55%; margin-bottom:20px; left: 20px;' src='icons/ws/sani_cooling.svg'/>");
 			var icon2  = $("<img class='icon icon0 on_off' style='position: absolute; top: 55%; margin-bottom:20px; left: 75px;' src='icons/ws/sani_floor_heating.svg'/>");
 			var icon3  = $("<img class='icon icon0 hot' style='position: absolute; top: 55%; margin-bottom:20px; right: 20px;' src='icons/ws/sani_floor_heating.svg'/>");
@@ -403,13 +439,29 @@ $.widget("sv.status_rtr_slider", $.sv.widget, {
 			btn2.click(function() {
 			  console.log("öln-öff");
 			});
-			btn3.click(function() {
-			 // that.setValue(that.options.value + 0.1);
-			 console.log("plus");
+					
+			
+			icon1.click(function() {
+				  //this.setValue(this.options.value - 0.1);
+				  console.log("freeze");
+				  
+			});
+			icon2.click(function() {
+				  //this.setValue(this.options.value - 0.1);
+				  console.log("freeze");
+			});
+			icon3.click(function() {
+				  //this.setValue(this.options.value - 0.1);
+				  console.log("freeze");
+				  
 			});
 		  }
 		});
-
+		
+		$(".rs-handle").css('box-shadow', '0px 0px 15px #875009');
+		$(".rs-handle").css('box-shadow', handle_color );
+		$(".rs-handle").css('background-image', handle_color );
+		$(".rs-range").css('background-image', track_color );
 	},
 	
 	_events: {
