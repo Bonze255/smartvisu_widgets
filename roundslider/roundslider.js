@@ -9,8 +9,8 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		handlesize:20,
 		step:1,
 		scale_interval:10, 
-		scale_min:0, 
-		scale_max:100, 
+		scale_min: 0, 
+		scale_max: 100, 
 		width:20, 
 		thickness:0.1,
 		circleshape:"pie", 
@@ -45,6 +45,7 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		var to_value = this.element.attr('data-values').explode()[2];
 		var scale = this.element.attr('data-values').explode()[3];
 		var scale_interval = this.options.scale_interval;
+
 		
 		//get colours from css theme
 		var bg_color = $('.ui-bar-b').css('background-color');
@@ -55,7 +56,9 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		var handle_color = $(".ui-page-theme-a.ui-btn").css('background-image');
 		
 		
-		console.log("###################DEBUG:");	
+		console.log("###################DEBUG:");
+		console.log("Scale min  ",this.options.scale_min);
+		console.log("Scale min  ",this.options.scale_max);
 		console.log("Value1 ",response[0]);
 		console.log("Value2 ",response[1]);
 		console.log("Value length ",user_value_length);
@@ -115,21 +118,22 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 		//dann müssen 2 items übermittelt werden, 1 das triggeritem bzw die daten 
 		//und das 2te , an welches der ausgewählte wert gesendet werden soll
 		//man kann dann das bild wählen, welches dann im kreis angezeigt wird
-		if (Array.isArray(user_value)){
-			console.log("Value ist array, länge ", user_trigger.length);
-			if (Number.isInteger(user_value)){
-				console.log("Value numerisch und index des arrays", user_index);
-				var val = $("div#"+id).roundSlider("option", "value");
-				console.log(val);
-				$(this).find("rs-tooltip").prepend("<img src="+user_trigger[val]+" width='1em' style='border-radius: 100%;-webkit-border-radius: 100%;-moz-border-radius: 100%;>");
+		// if (Array.isArray(user_value)){
+			// console.log("Value ist array, länge ", user_trigger.length);
+			// if (Number.isInteger(user_value)){
+				// console.log("Value numerisch und index des arrays", user_index);
+				// var val = $("div#"+id).roundSlider("option", "value");
+				// console.log(val);
+				// $(this).find("rs-tooltip").prepend("<img src="+user_trigger[val]+" width='1em' style='border-radius: 100%;-webkit-border-radius: 100%;-moz-border-radius: 100%;>");
 				
-			};
-		};
+			// };
+		// };
 	//eigentlicher Aufruf roundslider	
 	$("div#"+id).roundSlider({
 		circleShape: this.options.circleshape,
 		sliderType: this.options.slidertype,
 		editableTooltip: false,
+		showTooltip: true,
 		handleSize: this.options.handlesize,
 		radius: this.options.radius,
 		width: this.options.width,
@@ -147,22 +151,23 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 
 				//user_trigger =  array mit bildern
 				//user_data_send = item welches beschrieben werden soll
-				if (Array.isArray(user_value)){
-					console.log("Value",args.value);
-					console.log("Item",user_value_item[1]);
-					io.write(user_value_item[1], args.value);
-					$("#"+id).find("img").append("<img  src="+user_value[args.value]+" style='width: 2em; clip-path: circle(); '>")
-				}else{
+				// if (Array.isArray(user_value)){
+					// console.log("Value",args.value);
+					// console.log("Item",user_value_item[1]);
+					// io.write(user_value_item[1], args.value);
+					// $("#"+id).find("img").append("<img  src="+user_value[args.value]+" style='width: 2em; clip-path: circle(); '>")
+				// }else{
 					console.log("Value",args.value);
 					console.log("Item",user_value_item[0]);
 					io.write(user_value_item[0], args.value);
-				}
+				//}
 					
 			},
 			change: function (args) {
 				io.write(user_value_item[0], args.value);
-	
 			},
+			create: "onSliderCreate",
+			
 			tooltipColor: function (args) {
 				return font_color;
 			},
@@ -180,28 +185,34 @@ $.widget("sv.status_roundslider", $.sv.widget, {
 				//$(".rs-handle").css('box-shadow:', '0px 0px 15px  red');
 			//}
 		});
-		
+		window.onSliderCreate = function (args) {
+			//$("div#"+id).find(".rs-tooltip").html("<div id='rs_value_pre' style='font-size:0.4em; '>"+ pre_value +"</div><div id='value' style='font-weight:bold;font-size:0.8em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.4em;'>"+to_value+"</div>");
+			return "<div id='rs_value_pre' style='font-size:0.4em; '>"+ pre_value +"</div><div id='value' style='font-weight:bold;font-size:0.8em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.4em;'>"+to_value+"</div>";
+				
+			};
+			
 		window.changeTooltip = function (args) {
 				var val = args.value;
 				var icon = $("div#"+id).attr('data-icon');
 				console.log("icon übergebn", icon);
-				if (Array.isArray(user_value)){
+				// if (Array.isArray(user_value)){
 					
-					return "<img src="+user_value[val] +" style='width:1em; margin:auto; margin-bottom: 0em; border-radius: 30%; -webkit-border-radius: 50%; -moz-border-radius: 50%;display:block !important;'>";
-				}else if (icon != ''){
-					//add default path if icon has no path
-					if(icon.indexOf('.') == -1){
-						icon = icon+'.svg';
-					};
-					if(icon.indexOf('/') == -1){
-						icon = 'icons/ws/'+icon;
-					}else{
-						icon = icon;	
-					};
-					return "<img src="+icon +" style='width:2em; margin:auto; margin-bottom: 0em; margin-top:-2em; clip-path: circle(); display:block !important;'><div id='value' style='font-weight:bold;font-size:1em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.5em;'>"+to_value+unit+"</div>";;
-				}else{
-					return "<div id='rs_value_pre' style='font-size:0.4em; '>"+ pre_value +"</div><div id='value' style='font-weight:bold;font-size:0.8em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.4em;'>"+to_value+unit+"</div>";
-				}
+					// return "<img src="+user_value[val] +" style='width:1em; margin:auto; margin-bottom: 0em; border-radius: 30%; -webkit-border-radius: 50%; -moz-border-radius: 50%;display:block !important;'>";
+				// }else if (icon != ''){
+					// //add default path if icon has no path
+					// if(icon.indexOf('.') == -1){
+						// icon = icon+'.svg';
+					// };
+					// if(icon.indexOf('/') == -1){
+						// icon = 'icons/ws/'+icon;
+					// }else{
+						// icon = icon;	
+					// };
+					// return "<img src="+icon +" style='width:2em; margin:auto; margin-bottom: 0em; margin-top:-2em; clip-path: circle(); display:block !important;'><div id='value' style='font-weight:bold;font-size:1em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.5em;'>"+to_value+"</div>";;
+				// }else{
+					//$("div#"+id).find(".rs-tooltip").html("<div id='rs_value_pre' style='font-size:0.4em; '>"+ pre_value +"</div><div id='value' style='font-weight:bold;font-size:0.8em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.4em;'>"+to_value+"</div>");
+					return "<div id='rs_value_pre' style='font-size:0.4em; '>"+ pre_value +"</div><div id='value' style='font-weight:bold;font-size:0.8em;'>" + args.value + unit +"</div><div id='rs_value_to' style='font-size:0.4em;'>"+to_value+"</div>";
+				//}
 			
 			}
 
