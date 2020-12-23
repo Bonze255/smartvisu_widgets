@@ -63,3 +63,37 @@
 		</div>
 	</div>
 {% endmacro %}
+
+{% macro rtr_slider2(id, item_actual, item_set, item_comfort, item_night, item_frost, item_state, min, max, step, scale_interval, circleshape, slidertype) %}
+<div {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.rtr_slider2" data-item="{{item_actual}},{{item_set}},{{item_comfort}},{{item_night}},{{item_frost}},{{item_state}}" data-values=" {{ numbers| default('false')}}" 
+	data-scale_min="{{min | default('0')}}" data_scale_max="{{max| default('255')}}" data-step="{{step | default('5')}}"  data-scale_interval="{{scale_interval | default('20')}}" data-step="{{step | default('1')}}"
+	data-circleshape="{{circleshape | default('pie')}}" data-slidertype="{{slidertype | default('min-range')}}"
+	style="margin:auto; position:absolute;"> 
+	/**
+	* pseudo divs, to get styles 
+	**/
+	<div class="ui-bar-a" style="visibility:hidden;"> </div>
+	<div class="ui-bar-b" style="visibility:hidden;"> </div>
+	<div class="ui-page-theme-a ui-btn" style="visibility:hidden;"> </div>
+	
+	<div id="container" style="position:absolute; margin:auto;">
+			<div class="outouterslider" id ="{{ uid(page, id) }}" style="position: absolute;
+				margin:auto; margin-top:25px;">
+				
+			</div>
+			<div class="outerslider" id ="{{ uid(page, id) }}" style="position: absolute;
+				margin:auto; margin-top:30px;">
+				
+			</div>
+			
+			<div class="innerslider" id ="{{ uid(page, id) }}" style="
+				position: relative;
+				top: 50%;
+				margin-top: 40px;
+				margin-left: 10px;
+				">
+			</div>
+			<span class="soll"></span>
+	</div>
+</div>
+{% endmacro %}
