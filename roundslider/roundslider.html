@@ -68,7 +68,7 @@
 <div {% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="status.rtr_slider2" data-item="{{item_actual}},{{item_set}},{{item_comfort}},{{item_night}},{{item_frost}},{{item_state}}" data-values=" {{ numbers| default('false')}}" 
 	data-scale_min="{{min | default('0')}}" data_scale_max="{{max| default('255')}}" data-step="{{step | default('5')}}"  data-scale_interval="{{scale_interval | default('20')}}" data-step="{{step | default('1')}}"
 	data-circleshape="{{circleshape | default('pie')}}" data-slidertype="{{slidertype | default('min-range')}}"
-	style="margin:auto; position:absolute;"> 
+	style="margin:auto; position:relative;"> 
 	/**
 	* pseudo divs, to get styles 
 	**/
@@ -76,24 +76,47 @@
 	<div class="ui-bar-b" style="visibility:hidden;"> </div>
 	<div class="ui-page-theme-a ui-btn" style="visibility:hidden;"> </div>
 	
-	<div id="container" style="position:absolute; margin:auto;">
-			<div class="outouterslider" id ="{{ uid(page, id) }}" style="position: absolute;
-				margin:auto; margin-top:25px;">
-				
+	<div id="container" style="position:position:relative; margin:auto;">
+			{% import "basic.html" as basic %}
+			<div class="outerslider" id ="{{ uid(page, id) }}" style="position:relative;margin:auto; ">
 			</div>
-			<div class="outerslider" id ="{{ uid(page, id) }}" style="position: absolute;
-				margin:auto; margin-top:30px;">
-				
+			<div class="innerslider" id ="{{ uid(page, id) }}" style="margin:auto; top:-13.3em;">
 			</div>
+		{% if item_set %}
+			<div class="set" style="position:relative; top: -18em;">
+				<div class="temp">Soll: {{ basic.print('', item_set, '°' ) }}</div>
+				<div>
+					{{ basic.offset('', item_offset|default(item_set), -(step|default(0.5)), 'minus', '', 'micro' ) }}
+					{{ basic.offset('', item_offset|default(item_set), step|default(0.5), 'plus', '', 'micro' ) }}
+				</div>
+			</div>
+		{% endif %}
+		{% if item_comfort is not empty or item_night is not empty or item_frost is not empty or item_state is not empty %}
+		<div class="control" style="position:relative; top: -17em;left: 0.2em;">
+			{% if item_comfort is not empty and (item_comfort == item_night or item_night is empty) and (item_comfort == item_frost or item_frost is empty) %}
+				{{ basic.stateswitch('', item_comfort, 'icon', (config_driver == 'linknx' ? ['comfort', 'standby'] : [1, 2]), ['user_available.svg', 'user_away.svg'], '', ['icon1', 'icon0']) }}
+				{{ basic.stateswitch('', item_comfort, 'icon', (config_driver == 'linknx' ? ['night', 'standby'] : [3, 2]), ['scene_night.svg', 'scene_day.svg'], '', ['icon1', 'icon0']) }}
+				{{ basic.stateswitch('', item_comfort, 'icon', (config_driver == 'linknx' ? ['frost', 'standby'] : [4, 2]), ['weather_frost.svg', 'weather_frost.svg'], '', ['icon1', 'icon0']) }}
+			{% else %}
+				{% if item_comfort is not empty %}
+					{{ basic.stateswitch('', item_comfort, 'icon', '', ['user_away.svg', 'user_available.svg']) }}
+				{% endif %}
+				{% if item_night is not empty %}
+					{{ basic.stateswitch('', item_night, 'icon', '', ['scene_night.svg', 'scene_day.svg']) }}
+				{% endif %}
+				{% if item_frost is not empty %}
+					{{ basic.stateswitch('', item_frost, 'icon', '', ['weather_frost.svg', 'weather_frost.svg']) }}
+				{% endif %}
+			{% endif %}
+			{% if item_state is not empty %}
+				{{ basic.stateswitch('', item_state, 'icon', '', 'sani_heating.svg') }}
+			{% endif %}
+		</div>
+		{% endif %}
+		
+		<br>
+	</div>
 			
-			<div class="innerslider" id ="{{ uid(page, id) }}" style="
-				position: relative;
-				top: 50%;
-				margin-top: 40px;
-				margin-left: 10px;
-				">
-			</div>
-			<span class="soll"></span>
 	</div>
 </div>
 {% endmacro %}

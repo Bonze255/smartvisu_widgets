@@ -488,10 +488,10 @@ $.widget("sv.status_rtr_slider2", $.sv.widget, {
 	options: {
 		radius : 120,
 		startangle : 315,
-		step:1,
-		scale_interval:2, 
-		scale_min:5, 
-		scale_max:30, 
+		step:0.1,
+		scale_interval:1, 
+		scale_min:18, 
+		scale_max:25, 
 		width:20, 
 		thickness:0.1,
 		circleshape:"full", 
@@ -512,10 +512,7 @@ $.widget("sv.status_rtr_slider2", $.sv.widget, {
 		var scale_min = this.options.scale_min;//20;
 		var scale_max = this.options.scale_max;//28;
 		var step = this.options.step; //0.2;
-		var value = this.element.attr('data-values').explode()[3];
 		var unit = "°C";
-		var pre_value = this.element.attr('data-values').explode()[5];
-		var to_value = this.element.attr('data-values').explode()[6];
 		var scale_interval = this.options.scale_interval;
 		var radius = 120;
 		var startangle = 315;
@@ -568,39 +565,39 @@ $.widget("sv.status_rtr_slider2", $.sv.widget, {
 				$("#"+id+".outerslider .rs-number").css("color",font_color); 
 				$("#"+id+".outerslider .rs-seperator").css("border-color",border_color );
 				$("#"+id+".outerslider .rs-seperator").css("border-width","2px");
-				$("#"+id+".outerslider .rs-seperator").css("width","15px");
-				$("#"+id+".outerslider rs-seperator_1").css("height","1px");
+				$("#"+id+".outerslider .rs-seperator").css("width","10px");
+				//$("#"+id+".outerslider.rs-seperator_1").css("height","1px");
 				$("#"+id+".outerslider .rs-seperator").css("margin-left","-10px"); 
 				
 			  };
-			  //scala gerade striche (kurz)
+			 //scala gerade striche (kurz)
 			  var interval = scale_interval/2;
 			  for (var i = o.min; i <= o.max; i += interval) {
 				var angle = this._valueToAngle(i);
 				var numberTag = this._addSeperator(angle, "rs-custom_1");
 				numberTag.addClass( "rs-seperator_1" );
-				$("#"+id+".outerslider rs-seperator_1").css("border-color",border_color );
-				$("#"+id+".outerslider rs-seperator_1").css("border-width","2px");
-				$("#"+id+".outerslider rs-seperator_1").css("width","10px");
-				$("#"+id+".outerslider rs-seperator_1").css("height","1px");
-				$("#"+id+".outerslider rs-seperator_1").css("margin-left","-25px"); 
+				 $("#"+id+".outerslider .rs-seperator_1 .rs-seperator").css("border-color",border_color );
+ 				$("#"+id+".outerslider .rs-seperator_1 .rs-seperator").css("border-width","1px");
+				$("#"+id+".outerslider .rs-seperator_1 .rs-seperator").css("width","5px");
+				$("#"+id+".outerslider .rs-seperator_1 .rs-seperator").css("height","1px");
+				$("#"+id+".outerslider .rs-custom_1 .rs-seperator").css("left","-10px");  
 				
 			  };
 			};
 		
-	//Sollwert
+	//Istwert
 	$("div#"+id+".outerslider").roundSlider({
 		  step:this.options.step,  
 		  sliderType: "min-range",
 		  radius: 110,
 		  showTooltip: true,
 		  editableTooltip: false,
-		  value: sollwert,
+		  value: istwert,
 		  circleShape: "full",
 		  startAngle: "315",
 		  endAngle: "225",
-		  min: scale_min,
-		  max: scale_max,
+		  min: this.options.scale_min,
+		  max: this.options.scale_max,
 		  handleShape: "round",
 		  handleSize: "20,0",
 		width:width,
@@ -608,116 +605,22 @@ $.widget("sv.status_rtr_slider2", $.sv.widget, {
 		startAngle: this.options.startangle,
 		svgMode: true,
 			tooltipFormat:function (args){
-				//$("#"+id+".outerslider").find(".rs-tooltip").empty();
-				//$("#"+id+".outerslider").html("<span id='rs_value_to' style='font-size:1em;color:"+font_color+";'>Soll: "+args.value+"</span>");
 				console.log("Funktion change sollwert aufgerufen");
-				return"<span style='top:-2em; font-size:0.4em;color:"+font_color+";'>Soll: "+args.value+"°C</span> <div id='icons' style='z-index: 2; position: absolute; left:-1.0em; top: 0.8em; width:4em;'> </div> <div id='btns' style='z-index: 2; position: absolute; left:-1em; top: 1.8em; width:4em;'></div>"
+				return"<span style='position: relative;top:-2.2em;font-size:0.4em;color:"+font_color+"; '>Ist: </span></br><span style='position: relative;top:-1.7em;font-weight:bold;font-size:0.8em;color:"+font_color+";'>" + args.value + unit +"</span>";
 			},
-			drag: function (args) {
-				io.write(response[1], args.value);	
-			},
-			change: function (args) {
-				io.write(response[1], args.value);
-			},
-			
-			beforeCreate: function (args) {
-				
-				$("#"+id+".outerslider .rs-handle").css('box-shadow', '0px 0px 15px #875009');
-				$("#"+id+".outerslider .rs-handle").css('box-shadow', handle_color );
-				$("#"+id+".outerslider .rs-handle").css('background-image', handle_color );
-				$("#"+id+".outerslider .rs-range").css('background-image', track_color );
-				
-			},
-			
-
 			rangeColor: function (args) {
 				return border_color;
 			},
 			pathColor: function (args) {
-				//return 'transparent';
 				return path_color;
 			},
 			borderColor: function (args) {
 				return border_color;
 			}
 			
-		});
-		//function changeSollwert(args){
-		///	$("#"+id+".outerslider").find(".rs-tooltip").empty();
-		//	$("#"+id+".outerslider").find(".rs-tooltip").append("<span style='top:-2em; font-size:0.4em;color:"+font_color+";'>Soll: "+args.value+"°C</span> <div id='icons' style='z-index: 2; position: absolute; left:-1.0em; top: 0.8em; width:4em;'> </div> <div id='btns' style='z-index: 2; position: absolute; left:-1em; top: 1.8em; width:4em;'></div>");
-			
-		//}
+		});		
 		
-		//add tooltip symbols
-		var icon1 = $("<img class='icon icon0 comfort' style='width:36px; position: relative;  ' src='icons/ws/user_away.svg' alt='user_away'/>");
-		var icon2  = $("<img class='icon icon0 night' style='width:36px; position: relative; ' src='icons/ws/scene_night.svg' alt='scene_night'/>");
-		var icon3  = $("<img class='icon icon0 freeze' style='width:36px; position: relative; ' src='icons/ws/weather_frost.svg' alt='weather_frost'/>");
-		//var icon3 = $('<svg class="freeze fx-icon icon" style="width:36px; position: relative;"  viewBox="20 20 321 321" role="img" aria-label="weather_frost" alt="weather_frost" ><g><path d="m175.642,93.244c0,29.179 0,58.358 0,87.538 0,6.449 10,6.449 10,0 0-29.179 0-58.358 0-87.538 .001-6.449-10-6.449-10,0z"></path><path d="m152.646,106.373c8.507,4.912 17.014,9.823 25.521,14.734 5.595,3.23 10.628-5.413 5.047-8.635-8.507-4.912-17.014-9.823-25.521-14.734-5.595-3.23-10.629,5.413-5.047,8.635z"></path><path d="m203.301,97.738c-8.507,4.912-17.014,9.823-25.521,14.734-5.582,3.222-.548,11.865 5.047,8.635 8.507-4.912 17.014-9.823 25.521-14.734 5.581-3.222 .548-11.865-5.047-8.635z"></path><path d="m102.005,140.322c25.27,14.59 50.54,29.18 75.81,43.769 5.595,3.23 10.628-5.412 5.047-8.634-25.27-14.59-50.54-29.18-75.81-43.77-5.594-3.23-10.628,5.412-5.047,8.635z"></path><path d="m101.947,166.788c8.507-4.911 17.014-9.823 25.521-14.734 5.582-3.222 .548-11.865-5.047-8.635-8.507,4.911-17.014,9.823-25.521,14.734-5.581,3.222-.547,11.865 5.047,8.635z"></path><path d="m119.752,118.602c0,9.823 0,19.646 0,29.468 0,6.449 10,6.449 10,0 0-9.823 0-19.646 0-29.468 0-6.449-10-6.449-10,0z"></path><path d="m107.245,227.8c25.271-14.59 50.541-29.18 75.811-43.771 5.581-3.222 .548-11.865-5.047-8.634-25.271,14.59-50.541,29.18-75.811,43.77-5.582,3.223-.548,11.865 5.047,8.635z"></path><path d="m130.089,241.135c0-9.823 0-19.646 0-29.469 0-6.448-10-6.448-10,0 0,9.823 0,19.646 0,29.469 0,6.448 10,6.448 10,0z"></path><path d="m97.238,201.584c8.507,4.911 17.014,9.823 25.521,14.734 5.595,3.23 10.628-5.412 5.047-8.635-8.507-4.911-17.014-9.823-25.521-14.734-5.595-3.23-10.629,5.412-5.047,8.635z"></path><path d="m185.545,267.566c0-29.18 0-58.359 0-87.539-.001-6.449-10-6.449-10,0 0,29.179 0,58.359 0,87.539 0,6.449 10,6.449 10,0z"></path><path d="m208.541,254.437c-8.507-4.911-17.014-9.823-25.521-14.734-5.595-3.23-10.628,5.412-5.047,8.635 8.507,4.911 17.014,9.823 25.521,14.734 5.595,3.23 10.628-5.413 5.047-8.635z"></path><path d="m157.886,263.071c8.507-4.911 17.014-9.823 25.521-14.734 5.581-3.223 .548-11.865-5.047-8.635-8.507,4.911-17.014,9.823-25.52,14.734-5.583,3.223-.549,11.866 5.046,8.635z"></path><path d="m259.182,219.821c-25.271-14.59-50.541-29.18-75.811-43.769-5.595-3.23-10.629,5.413-5.047,8.634 25.27,14.59 50.541,29.18 75.811,43.77 5.594,3.231 10.628-5.412 5.047-8.635z"></path><path d="m259.238,193.355c-8.507,4.911-17.014,9.823-25.52,14.734-5.581,3.223-.548,11.865 5.047,8.635 8.507-4.911 17.014-9.823 25.52-14.734 5.581-3.222 .548-11.865-5.047-8.635z"></path><path d="m241.435,241.541c0-9.822 .001-19.645 .001-29.467 0-6.448-10-6.448-10,0 0,9.822-.001,19.645-.001,29.467 0,6.448 10,6.448 10,0z"></path><path d="m253.941,132.344c-25.271,14.59-50.54,29.18-75.81,43.77-5.582,3.223-.548,11.865 5.047,8.634 25.27-14.589 50.54-29.179 75.81-43.769 5.581-3.223 .548-11.865-5.047-8.635z"></path><path d="m231.098,119.007c0,9.823 0,19.646 0,29.469 0,6.449 10,6.449 10,0 0-9.823 0-19.646 0-29.469 0-6.448-10-6.448-10,0z"></path><path d="m263.948,158.559c-8.507-4.912-17.014-9.823-25.521-14.735-5.595-3.23-10.628,5.412-5.047,8.635 8.507,4.912 17.014,9.823 25.521,14.735 5.595,3.23 10.628-5.412 5.047-8.635z"></path></g></svg>');
-		var icon4  = $("<img class='icon icon0 state' style='width:36px; position: relative; ' src='icons/ws/sani_heating.svg' alt='sani_heating'/>");
-		$("#"+id+".outerslider").find("#icons").append(icon1, icon2, icon3, icon4);
-		
-		var btn1 = $("<button id='sub' class='ui-btn ui-micro ui-corner-all ui-btn-inline ui-nodisc-icon' style='position: relative; left:-1.0em'>-</button>");
-		var btn2 = $("<button id='add' class='ui-btn ui-micro ui-corner-all ui-btn-inline ui-nodisc-icon' style='position: relative; right:-1.0em'>+</button>");
-		$("#"+id+".outerslider").find("#btns").append(btn1, btn2);
-		
-		btn1.click(function() {
-		  //this.setValue(this.options.value - 0.1);
-		  sollwert = sollwert-step;
-		  console.log("minus");
-		  io.write(items[1], sollwert);
-		});
-		btn2.click(function() {
-		  console.log("plus");
-		  sollwert = sollwert+step;
-		  io.write(items[1], sollwert);
-		});
-				
-		
-		icon1.click(function() {
-			  //this.setValue(this.options.value - 0.1);
-			  console.log("comfort");
-			  comfort = !comfort;
-			  if (comfort == true){
-				icon1.addClass("icon1");  
-			  }else{
-				icon1.removeClass("icon1");  
-			  }
-		});
-		icon2.click(function() {
-			  //this.setValue(this.options.value - 0.1);
-			  console.log("night");
-			  night = !night;
-			  if (night == true){
-				icon2.addClass("icon1");  
-			  }else{
-				icon2.removeClass("icon1");  
-			  }
-		});
-		
-		icon3.click(function() {
-			  //this.setValue(this.options.value - 0.1);
-			  console.log("frost");
-			  freeze = !freeze;
-			  if (freeze == true){
-				$("div#"+id+".freeze").addClass("icon1");  
-			  }else{
-				$("div#"+id+".freeze").removeClass("icon1");  
-			  }
-		});
-		icon4.click(function() {
-			  //this.setValue(this.options.value - 0.1);
-			  console.log("state");
-			  state = !state;
-			  if (state == true){
-				icon4.addClass("icon1");  
-			  }else{
-				icon4.removeClass("icon1");  
-			  }
-		});
-		
-		
-		
-	//ISTWERT
+	//SOLLWERT
 	$("#"+id+".innerslider").roundSlider({
 		  step: this.options.step, 
 		  min: this.options.scale_min,
@@ -725,19 +628,19 @@ $.widget("sv.status_rtr_slider2", $.sv.widget, {
 		  width: width,
 		  sliderType: "min-range",
 		  radius: 100,
-		  showTooltip: true,
-		  value: istwert,
+		  showTooltip: false,
+		  value: sollwert,
 		  circleShape: "full",
 		  startAngle: "315",
 		  endAngle: "225",
 		  handleShape: "round",
 		  handleSize: "20,0",
-		  tooltipFormat: function(args){
-			  	return"<span style='position: relative;top:-2.2em;font-size:0.4em;color:"+font_color+"; '>Ist: </span></br><span style='position: relative;top:-1.7em;font-weight:bold;font-size:0.8em;color:"+font_color+";'>" + args.value + unit +"</span>";
-		  },
 		  editableTooltip: false,
 		  svgMode: true,
-		  
+		  update: function (args) {
+				io.write(response[1], args.value);	
+			},
+			
 			tooltipColor: function (args) {
 				return font_color;
 			},
@@ -769,11 +672,12 @@ $.widget("sv.status_rtr_slider2", $.sv.widget, {
 		//};
 		
 		$("#"+id+".innerslider .rs-tooltip").css('height', "1em");
-		$("#"+id+".innerslider").removeClass("rs-seperator rs-seperator_1");
+		$("#"+id+".innerslider").removeClass("rs-number");
+		$("#"+id+".innerslider").removeClass("rs-custom_1");
 		$("#"+id+".innerslider .rs-handle").css('box-shadow', '0px 0px 15px #875009');
-		$("#"+id+".innerslider .rs-handle").css('box-shadow', "red" );
-		$("#"+id+".innerslider .rs-handle").css('background-image', "red" );
-		$("#"+id+".innerslider .rs-range").css('background-image', "red");
+		//$("#"+id+".innerslider .rs-handle").css('box-shadow', "red" );
+		//$("#"+id+".innerslider .rs-handle").css('background-image', "red" );
+		//$("#"+id+".innerslider .rs-range").css('background-image', "red");
 		
 	},
 	
