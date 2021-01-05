@@ -1,0 +1,20 @@
+
+
+/**
+* A widget to display katwarn messages
+*
+* @param {id=} unique id for this widget (optional)
+* @param {text} a directory where the pictures are located
+**/
+{% macro katwarn(id, item_messages ) %}
+	{% set uid = uid(page, id) %}
+	 
+	<div{% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="multimedia.katwarn" data-item="{{ item_messages}}">
+		<ul data-role="listview" class="ui-listview katwarn-container" style="margin-top: 0px;margin-bottom: 0em; margin-right:0px;">
+		</ul>
+	</div>
+	
+	
+
+
+{% endmacro %}
