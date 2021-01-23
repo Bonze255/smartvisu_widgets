@@ -15,28 +15,25 @@ $.widget("sv.supersize", $.sv.widget, {
 	_update: function (response) {
 		var id = this.element.attr('id');		
 		var supersized = false;
-		$(".supersize").click(function () {
-			if (supersized == false){
-				$(this).closest("div .block").addClass("overlay");
-				$('.overlay').show('slow');
-				//var content = $(this).closest("div .block").text();
-				//$(this).closest("div .block").addClass('overlay');
-
-				//$(this).closest("div .block").css( "width", "100%" );
-				//$(this).closest("div .block").css( "display", "block" );
-				console.log("SUPERSIZE ME");
-				supersized = true;
-				$(this).closest(".supersize").attr("src", "icons/ws/control_arrow_down_left.svg");
-			}else{
-				$(this).closest("div .block").removeClass("overlay");
-				$(this).closest(".supersize").attr("src", "icons/ws/control_arrow_up_right.svg");
+			$(".supersize").click(function (e) {
 				
-				console.log("MINIMIZE ME");
-				supersized = false;
-			}
+				if (supersized == false){
+					$(this).closest("div").addClass("overlay");
+					$('.overlay').show('slow');
+					$(this).closest("div").css( "width", "100%" );
+					$(this).closest(".supersize").attr("src", "\icons/sw/jquery_minus.svg");
+					console.log("SUPERSIZE ME");
+					supersized = true;
+				}else{
+					$(this).closest("div").removeClass("overlay");
+					console.log("MINIMIZE ME");
+					supersized = false;
+					$(this).closest(".supersize").attr("src", "\icons/sw/control_arrow_up_right.svg");
+				}
+		    e.stopPropagation();
+			e.stopImmediatePropagation();     
 		});
-		
-	},
+},
 
 
 	_repeat: function () {
