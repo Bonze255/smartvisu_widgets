@@ -28,7 +28,7 @@ $.widget("sv.supersize", $.sv.widget, {
 				supersized = false;
 				$(this).closest(".supersize").attr("src", "\icons/sw/control_arrow_up_right.svg");
 			}
-			$(window).trigger('resize');
+			
 			e.stopPropagation();
 			e.stopImmediatePropagation();
 		});
