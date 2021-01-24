@@ -1,8 +1,8 @@
 
-{% macro supersize(id, item_snapshots) %}
+{% macro supersize(id) %}
 	{% set uid = uid(page, id) %}
 	 
-	<span{% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="supersize" data-item="{{ item_snapshots}}">
+	<span{% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="supersize">
 		<a><img class="supersize" src="icons/sw/control_arrow_up_right.svg" style="position:absolute; width:4em; height:auto; top:0px; right:0px;"></a>
 	</span>
 {% endmacro %}
