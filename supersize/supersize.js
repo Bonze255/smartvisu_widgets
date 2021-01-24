@@ -12,7 +12,6 @@ $.widget("sv.supersize", $.sv.widget, {
 	},
 
 	_update: function (response) {
-		var id = this.element.attr('id');
 		var supersized = false;
 		$(".supersize").click(function (e) {
 
