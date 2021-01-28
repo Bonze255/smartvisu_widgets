@@ -1,13 +1,8 @@
-/**
-* Maximize the div Block which is included
-* @param {id=} unique id for this widget (optional)  
-* @author Bonze, ThomasCr
-**/
 
-{% macro supersize(id) %}
+{% macro supersize(id, item_snapshots, options_duration, options_easing, options_direction) %}
 	{% set uid = uid(page, id) %}
 	 
-	<span{% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="supersize">
+	<span{% if not id is empty %} id="{{ uid(page, id) }}"{% endif %} data-widget="supersize" data-item="{{ item_snapshots}}" >
 		<a><img class="supersize" src="icons/sw/control_arrow_up_right.svg" style="position:absolute; width:4em; height:auto; top:0px; right:0px;"></a>
 	</span>
 {% endmacro %}
