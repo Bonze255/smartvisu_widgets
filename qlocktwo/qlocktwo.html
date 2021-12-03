@@ -1,0 +1,35 @@
+/**
+* -----------------------------------------------------------------------------
+* @package     smartVISU
+* @author      Martin Gleiß
+* @copyright   2012
+* @license     GPL [http://www.gnu.de]
+* -----------------------------------------------------------------------------
+*/
+
+/**
+* Qlock Two Widget
+*
+* @param {id} unique id for this widget
+* @param {size} size of the widget: 'half' for 351px width (default), 'full' for 700px
+* @param {lang} language of the widget, default = 'de'
+*
+* @author Sebastian Helms
+*/
+{% macro qlocktwo(id, size, lang) %}
+	{% import "basic.html" as basic %}
+	{% set uid = uid(page, id) %}
+
+	<div id="{{ uid }}" data-widget="clock.qlocktwo">
+
+		<div id="q2" style="margin:5px auto" class="{{ size == 'full' ? 'full' : 'half' }}">
+			<div id="q2frame" class="{{ size == 'full' ? 'full' : 'half' }}">
+				<div class="q2border"><div id="q2UL">&bull;</div><div id="q2UR">&bull;</div></div>
+				<div id="qlocktwo" class="{{ size == 'full' ? 'full' : 'half' }}"></div>
+				<div class="q2border"><div id="q2BR">&bull;</div><div id="q2BL">&bull;</div></div>
+			</div>
+		</div>
+
+	</div>
+{% endmacro %}
+

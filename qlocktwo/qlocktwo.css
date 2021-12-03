@@ -1,0 +1,41 @@
+
+/* Master DIV for Clock */
+.qlocktwo {
+   color: white; 
+   margin:0 auto; 
+   display:none;
+   display:         flex;
+   flex-wrap:       wrap;
+   justify-content: center;
+   align-items: center;
+   align-content: center;
+}
+
+.qlocktwo{
+    left: 10px;
+    right: 10px;  
+    height: 100%;
+    margin: 0 auto;
+    font-weight: 200;
+    font-size: 3.5em;
+    line-height: 1.0em;
+}
+/* */
+.q2quot {
+    letter-spacing: -1.5em;
+}
+
+/* */
+.q2col {
+    width: 1.5em;
+    height: 100vh;
+    float: left;
+    text-align: center;
+
+}
+
+/* Highlited WORD*/
+.lit { 
+    font-weight: 300;
+    text-shadow: 0 0 10px rgb(190, 33, 33);
+}

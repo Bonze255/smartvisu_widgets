@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+    <script src="qlocktwo.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="qlocktwo.css">
+    <link rel="stylesheet" href="supersize.css">
+</head>
+
+<body>
+    <script type="text/javascript">
+        //initQlockTwo('de');
+        //wenn idle timer executed, then overlay qlock
+        function showQlock() {
+            console.log("showqlock");
+            $('.overlay').show('slow');
+            //$('.overlay').css('width', '100vw');
+            $('.overlay').css('height', '100vh');
+            $('.overlay').css('background-color', 'black');
+            //$(this).closest("div").css( "width", "100%" );
+            $(".qlocktwo").css("display", "flex");
+            // $(this).closest("#qlocktwo").attr("src", "\icons/sw/jquery_minus.svg");
+            console.log("SUPERSIZE ME");
+            supersized = true;
+        };
+
+        $(document).on('click', function () {
+            if (supersized == true) {
+                $(".overlay").css("display", "none");
+                $(".overlay").css('background-color', 'white');
+                supersized = false;
+
+            }
+        });
+
+        // idleTimer() takes an optional argument that defines the idle timeout
+        // timeout is in milliseconds; defaults to 30000
+        $(document).ready(function () {
+            idleTimer();
+            console.log("starte timer");
+        });
+
+
+
+        function idleTimer() {
+            var t;
+            window.onload = resetTimer;
+            window.onmousemove = resetTimer;
+            window.onmousedown = resetTimer;  // catches touchscreen presses as well      
+            window.ontouchstart = resetTimer; // catches touchscreen swipes as well 
+            window.onclick = resetTimer;      // catches touchpad clicks as well
+            window.onkeydown = resetTimer;
+            window.addEventListener('scroll', resetTimer, true); // improved; see comments
+
+            function resetTimer() {
+                clearTimeout(t);
+                t = setTimeout(showQlock, 1000);  // time is in milliseconds
+            }
+        };
+        var qclockid = 'qclock';
+
+        $(document).ready(function () {
+
+            clearInterval(q2.clockTimer);
+            abortFadeTimer();
+            q2.current.minute = -1;
+
+            $('#' + qclockid).empty();
+            initQlockTwo('de', qclockid);
+            q2.current.litCells = [0, 0, 0, 0];
+            changeCells(currentTimeCells());
+
+            onClockTimerFired();
+            q2.clockTimer = setInterval('onClockTimerFired()', 500);
+        });
+    </script>
+    <div class="frame" style="margin: 0px auto;">
+        <div id="qclock" class="qlocktwo overlay " style="">
+
+        </div>
+        <div style="background-color: red; width:50%; height:10%;  ">test</div>
+    </div>
+</body>
+
+</html>
